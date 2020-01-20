@@ -2,7 +2,8 @@ import React from "react";
 import { ConnectedRouter } from "connected-react-router";
 import { Switch, Route } from "react-router-dom";
 import LoginPage from "../LoginPage";
-
+import SignUpPage from '../SignUpPage';
+import PostsFeed from '../PostsFeed';
 
 
 
@@ -16,6 +17,7 @@ function Router(props) {
     <ConnectedRouter history={props.history}>
       <Switch>
         <Route path={routes.root} component={LoginPage} />
+        <Route path={routes.SignUp} component={SignUpPage}/>
       </Switch>
     </ConnectedRouter>
   );
