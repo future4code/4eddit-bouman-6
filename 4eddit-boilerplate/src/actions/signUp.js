@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { push, replace, goBack } from 'connected-react-router';
-import { routes } from '../Router'
+import { routes } from '../containers/Router'
 
 const baseURL = "https://us-central1-missao-newton.cloudfunctions.net/fourEddit"
 
@@ -12,10 +12,12 @@ export const createUser = (email, password, username) => async (dispatch) => {
    }
 
    try{
-      await axios.post(`${baseURL}/signup`, newUser)
-   
+      const response = await axios.post(`${baseURL}/signup`, newUser)
+      window.localStorage.setItem("token", response.data.token)
+
       dispatch(push(routes.feed))
+
    }catch(error) {
       window.alert("Erro ao criar usuário!")
-   }
+   }   
 }
