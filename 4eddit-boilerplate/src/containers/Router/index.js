@@ -2,20 +2,20 @@ import React from "react";
 import { ConnectedRouter } from "connected-react-router";
 import { Switch, Route } from "react-router-dom";
 import LoginPage from "../LoginPage";
+import Feed from "../Feed";
 
-
-
-
-const routes = {
-  root: "/"
-  // Outras rotas aqui
+export const routes = {
+  root: "/",
+  feed: "/feed",
 };
 
 function Router(props) {
+  
   return (
     <ConnectedRouter history={props.history}>
       <Switch>
-        <Route path={routes.root} component={LoginPage} />
+        <Route exact path={routes.root} component={LoginPage} />
+        <Route path={routes.feed} component={Feed} />
       </Switch>
     </ConnectedRouter>
   );
