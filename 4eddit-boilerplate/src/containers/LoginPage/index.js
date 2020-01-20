@@ -20,6 +20,8 @@ const P = styled.p`
 font-size:12px;
 `
 
+
+
 class LoginPage extends Component {
   constructor(props){
     super(props);
@@ -60,7 +62,7 @@ class LoginPage extends Component {
           label="Password"
           value={password} 
         />
-        <Button onClick={this.handleLoginButton} color="primary" variant="contained">Entrar</Button>
+        <Button onClick={this.handleLoginButton } color="primary" variant="contained">Entrar</Button>
         <Button>Cadastrar</Button>
       </Container>
     );
