@@ -14,7 +14,7 @@ const CommentsContainer = styled.div`
 `
 
 
-class PostsFeed extends Component {
+class PostDetails extends Component {
   render() {
     return (
       <div>
@@ -29,4 +29,4 @@ class PostsFeed extends Component {
   }
 }
 
-export default PostsFeed;
+export default PostDetails;
