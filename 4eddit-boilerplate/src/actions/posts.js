@@ -48,3 +48,28 @@ export const createPost = (text,title) => async (dispatch) => {
         window.alert("Erro ao criar post")
     }
 }
+
+export const postVote = (direction,postId) => async (dispatch) => {
+    const token = window.localStorage.getItem("token");
+    const axiosHeader = {
+        headers: {
+            auth: token
+        }
+    };
+
+    const informationVote = {
+        direction,
+    }
+
+    try {
+        const response = await axios.put(
+            `https://us-central1-missao-newton.cloudfunctions.net/fourEddit/posts/${postId}/vote`,
+            informationVote,
+            axiosHeader,
+            )
+            dispatch(getPosts())
+
+    }catch(error){
+        window.alert("erro no voto")
+    }
+}
