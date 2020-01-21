@@ -23,3 +23,28 @@ export const getPosts = () => async (dispatch) => {
         window.alert("erro")
     }
 }
+
+export const createPost = (text,title) => async (dispatch) => {
+    const token = window.localStorage.getItem("token");
+    const axiosHeader = {
+        headers: {
+            auth: token
+        }
+    };
+
+    const postInformation = {
+        text,
+        title,
+    }
+
+    try{
+        const response = await axios.post(
+            "https://us-central1-missao-newton.cloudfunctions.net/fourEddit/posts", 
+            postInformation,
+            axiosHeader,
+            )
+        dispatch(getPosts())
+    }catch(erros){
+        window.alert("Erro ao criar post")
+    }
+}
