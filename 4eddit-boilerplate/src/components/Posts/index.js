@@ -10,6 +10,17 @@ const ContainerPosts = styled.div`
 width:30%;
 margin:20px auto;
 `
+
+const ContainerPostsCount = styled.div`
+margin-left:10px;
+margin-right:160px;
+`
+
+const NumberOfComments = styled.span`
+margin-left:5px;
+`
+
+
 function Posts (props){
     return (
         <ContainerPosts>
@@ -18,12 +29,11 @@ function Posts (props){
             <Card>
                 <CardContent>
                     <Typography variant="h5" gutterBottom>
-                        CampiotoLucas
+                        {props.post.username}
                     </Typography>
                     <hr/>
                     <Typography  >
-                        estou ouvindo uma musica muito topppppppppppppppppppppppppppppp
-                        adaoadkaopsdkkasodpk
+                       {props.post.text}
                     </Typography>
                    <hr/>
                     <Typography variant="body2" component="p">
@@ -31,11 +41,17 @@ function Posts (props){
                     </Typography>
                 </CardContent>
                 <CardActions>
-                   <span>⬆</span>
-                   <span>0</span>
-                   <span>⬇</span>
-                   <span>comentários</span>
-                   <span>0</span>
+                    
+                        <ContainerPostsCount>
+                            <span>⬆</span>
+                            <span>0</span>
+                            <span>⬇</span>
+                        </ContainerPostsCount>
+                        <div>
+                            <span>comentários</span>
+                            <NumberOfComments>0</NumberOfComments>
+                        </div>
+                    
                 </CardActions>
             </Card>
         </ContainerPosts>
