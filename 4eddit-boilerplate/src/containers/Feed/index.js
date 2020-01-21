@@ -24,43 +24,40 @@ border-bottom: solid 2px #ED7F61;
 
 class Feed extends Component {
 
-
-    componentDidMount(){
+    componentDidMount() {
         this.props.getPosts()
     }
 
-    render(){
+    render() {
         console.log("lista de post", this.props.getToPosts)
-        return(
+        return (
             <Container>
-                    <div>
-                        <H1>Feed</H1>
-                        <TextField  
-                            onChange={this.handleFieldChange}
-                            label="Novo Post"          
-                        />
-                    </div>
-                    <ContainerButton>
-                        <Button color="primary" variant="contained">Postar</Button>
-                    </ContainerButton>
-                    
+                <div>
+                    <H1>Feed</H1>
+                    <TextField
+                        onChange={this.handleFieldChange}
+                        label="Novo Post"
+                    />
+                </div>
+                <ContainerButton>
+                    <Button color="primary" variant="contained">Postar</Button>
+                </ContainerButton>
 
-                    {this.props.getToPosts.map(post=>(
-                        <Posts post={post}></Posts>
-                    ))}
-                    
-               
+
+                {this.props.getToPosts.map(post => (
+                    <Posts post={post}></Posts>
+                ))}
             </Container>
-            
+
         )
     }
 }
 
-const mapStateToProps = (state) =>({
+const mapStateToProps = (state) => ({
     getToPosts: state.posts.allPosts,
 })
 
-const mapDispatchToProps = (dispatch) =>{
+const mapDispatchToProps = (dispatch) => {
     return {
         getPosts: () => dispatch(getPosts())
     }
