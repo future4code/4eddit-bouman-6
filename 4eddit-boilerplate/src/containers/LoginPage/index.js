@@ -3,7 +3,9 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import styled from "styled-components";
 import { login } from '../../actions/login';
-import { connect } from "react-redux";  
+import { connect } from "react-redux"; 
+import { push } from "connected-react-router"; 
+import { routes } from "../Router";
 
 
 
@@ -63,14 +65,15 @@ class LoginPage extends Component {
           value={password} 
         />
         <Button onClick={this.handleLoginButton } color="primary" variant="contained">Entrar</Button>
-        <Button>Cadastrar</Button>
+        <Button onClick={this.props.goToRegister}>Cadastrar</Button>
       </Container>
     );
   }
 }
 
 const mapDispatchToProps = dispatch =>({
-  login: (email,password) => dispatch(login(email,password))
+  login: (email,password) => dispatch(login(email,password)),
+  goToRegister: ()=> dispatch(push(routes.signup))
 })
 
 export default connect(null, mapDispatchToProps)(LoginPage);
