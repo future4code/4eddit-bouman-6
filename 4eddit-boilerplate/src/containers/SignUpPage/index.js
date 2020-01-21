@@ -7,6 +7,7 @@ import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Logo from '../../4eddit.png';
 import styled from 'styled-components';
+import { createUser } from "../../actions/signUp"
 
 const StyledImg = styled.img`
   width: 150px;
@@ -56,9 +57,9 @@ class SignUpPage extends Component {
     this.setState({form: {...this.state.form, [name]: value} });
   }
 
-  handleOnSubmit = event => {
-    event.preventDefault();
-    this.props.createUser();
+  handleCreateUser = () => {
+    const { email, password, username } = this.state.form
+    this.props.createUser(email,password,username)
   }
   
   render() {
@@ -68,7 +69,7 @@ class SignUpPage extends Component {
 
         <form onSubmit={this.handleInputChanges}>
           {signUpForm.map(input => (
-            <ButtonGroup orientation="vertical" color="primary" aria-label="vertical outlined primary button group">
+            <ButtonGroup orientation="horizontal" color="primary" aria-label="vertical outlined primary button group">
               <TextField
                 name={input.name} 
                 value={this.state.form[input.name] || ""} 
@@ -80,7 +81,7 @@ class SignUpPage extends Component {
             </ButtonGroup>
           ))}
           
-          <Button onClick={this.handleOnSubmit} variant="contained" color="primary">Cadastrar</Button>
+          <Button onClick={this.handleCreateUser} variant="contained" color="primary">Cadastrar</Button>
         </form>
       </InputContainer>
     );
@@ -89,7 +90,7 @@ class SignUpPage extends Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-      createUser: (email, password, username) => dispatch(push(email, password, username))
+      createUser: (email, password, username) => dispatch(createUser(email, password, username)),
   }  
 }
 
