@@ -32,11 +32,11 @@ export const getPosts = () => async (dispatch) => {
 
 // CRIA UM NOVO POSTS NA PÁGINA DE FEEDS
 
-export const createPost = (text, title) => async (dispatch) => {
+export const createPost = (text,title) => async (dispatch) => {
     const token = window.localStorage.getItem("token");
     const axiosHeader = {
         headers: {
-            auth: token,
+            auth: token
         }
     };
 
@@ -45,11 +45,14 @@ export const createPost = (text, title) => async (dispatch) => {
         title,
     }
 
-    try {
-        const response = await axios.post(`${baseURL}/posts`, postInformation, axiosHeader)
+    try{
+        const response = await axios.post(
+            "https://us-central1-missao-newton.cloudfunctions.net/fourEddit/posts", 
+            postInformation,
+            axiosHeader,
+            )
         dispatch(getPosts())
-
-    } catch (erros) {
+    }catch(erros){
         window.alert("Erro ao criar post")
     }
 }
@@ -78,5 +81,28 @@ export const getPostDetail = () => async (dispatch) => {
 
     } catch (error) {
         window.alert("Falha ao carregar detalhes da postagem!")
+
+export const postVote = (direction,postId) => async (dispatch) => {
+    const token = window.localStorage.getItem("token");
+    const axiosHeader = {
+        headers: {
+            auth: token
+        }
+    };
+
+    const informationVote = {
+        direction,
+    }
+
+    try {
+        const response = await axios.put(
+            `https://us-central1-missao-newton.cloudfunctions.net/fourEddit/posts/${postId}/vote`,
+            informationVote,
+            axiosHeader,
+            )
+            dispatch(getPosts())
+
+    }catch(error){
+        window.alert("erro no voto")
     }
 }
