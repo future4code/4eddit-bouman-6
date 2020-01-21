@@ -1,8 +1,14 @@
 import axios from 'axios';
+import { push } from 'connected-react-router';
+import { routes } from '../containers/Router';
 
-export const setPosts = (allPosts) =>({
+const baseURL = "https://us-central1-missao-newton.cloudfunctions.net/fourEddit"
+
+// COLOCA UM NOVO POST NO FEED
+
+export const setPosts = (allPosts) => ({
     type: "SET_POSTS",
-    payload:{
+    payload: {
         allPosts,
     }
 })
@@ -15,14 +21,16 @@ export const getPosts = () => async (dispatch) => {
         }
     };
 
-    try{
-        const response =  await axios.get("https://us-central1-missao-newton.cloudfunctions.net/fourEddit/posts",axiosHeader)
+    try {
+        const response = await axios.get(`${baseURL}/posts`, axiosHeader)
         dispatch(setPosts(response.data.posts));
-       
-    }catch(error){
+
+    } catch (error) {
         window.alert("erro")
     }
 }
+
+// CRIA UM NOVO POSTS NA PÁGINA DE FEEDS
 
 export const createPost = (text,title) => async (dispatch) => {
     const token = window.localStorage.getItem("token");
@@ -48,6 +56,31 @@ export const createPost = (text,title) => async (dispatch) => {
         window.alert("Erro ao criar post")
     }
 }
+
+//PEGAR O POST CLICADO E ENVIAR PARA PÁGINA DE DETALHES
+
+export const getPostDetailAction = (postId) => ({
+    type: "GET_POST_DETAIL",
+    payload: {
+        postId,
+    }
+})
+
+export const getPostDetail = () => async (dispatch) => {
+    const token = window.localStorage.getItem("token")
+    const axiosHeader = {
+        headers: {
+            auth: token,
+        }
+    }
+
+    try {
+        const response = await axios.get(`${baseURL}/posts/:postId`, axiosHeader)
+        dispatch(getPostDetailAction(response.data.post))
+        dispatch(push(routes.post))
+
+    } catch (error) {
+        window.alert("Falha ao carregar detalhes da postagem!")
 
 export const postVote = (direction,postId) => async (dispatch) => {
     const token = window.localStorage.getItem("token");

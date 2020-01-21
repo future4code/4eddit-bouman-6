@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { push } from "connected-react-router";
-import { routes } from "../containers/Router/index";
+import { routes } from "../containers/Router";
 
 export const login = (email, password) => async (dispatch) =>{
     const loginInformation = {

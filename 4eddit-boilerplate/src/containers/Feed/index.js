@@ -98,16 +98,16 @@ class Feed extends Component {
                     
             </div> 
             </Container>
-            
+
         )
     }
 }
 
-const mapStateToProps = (state) =>({
+const mapStateToProps = (state) => ({
     getToPosts: state.posts.allPosts,
 })
 
-const mapDispatchToProps = (dispatch) =>{
+const mapDispatchToProps = (dispatch) => {
     return {
         createPost: (title,text) => dispatch(createPost(title,text)),
         getPosts: () => dispatch(getPosts()),

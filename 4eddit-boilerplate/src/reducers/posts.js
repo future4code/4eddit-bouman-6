@@ -1,5 +1,6 @@
 const initialState = {
     allPosts: [],
+    postDetails: [],
 }
 
 const postsReducer = (state = initialState, action) => {
@@ -7,10 +8,13 @@ const postsReducer = (state = initialState, action) => {
         case "SET_POSTS":
             const postList = action.payload.allPosts;
             return { ...state, allPosts: postList }
+        
+        case "GET_POST_DETAIL":        
+            return { ... state, postDetails: action.payload.postId }
 
          default:
             return state;
     }
 }
 
-export default postsReducer
+export default postsReducer;
