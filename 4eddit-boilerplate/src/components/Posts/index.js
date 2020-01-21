@@ -24,8 +24,6 @@ margin-left:5px;
 function Posts (props){
     return (
         <ContainerPosts>
-
-        
             <Card>
                 <CardContent>
                     <Typography variant="h5" gutterBottom>
