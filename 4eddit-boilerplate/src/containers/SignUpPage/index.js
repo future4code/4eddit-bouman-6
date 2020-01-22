@@ -60,32 +60,32 @@ class SignUpPage extends Component {
 
   handleInputChanges = event => {
     const { name, value } = event.target;
-    this.setState({form: {...this.state.form, [name]: value} });
+    this.setState({ form: { ...this.state.form, [name]: value } });
   }
 
   handleCreateUser = () => {
     const { email, password, username } = this.state.form
-    this.props.createUser(email,password,username)
-  }  
-  
+    this.props.createUser(email, password, username)
+  }
+
   render() {
     return (
-      <MainContainer> 
-        <StyledImg src={Logo} alt="imagem da logo"/> 
-          <FormContainer onSubmit={this.handleInputChanges}>
-            {signUpForm.map(input => (          
-                <StyledTextField
-                  name={input.name} 
-                  value={this.state.form[input.name] || ""} 
-                  id={input.name} 
-                  label={input.label}                
-                  onChange={this.handleInputChanges}
-                  variant={input.variant} 
-                  type={input.type}
-                />
-            ))}
-            <Button onClick={this.handleCreateUser} variant="contained" color="primary">Cadastrar</Button>
-          </FormContainer>
+      <MainContainer>
+        <StyledImg src={Logo} alt="imagem da logo" />
+        <FormContainer onSubmit={this.handleInputChanges}>
+          {signUpForm.map(input => (
+            <StyledTextField
+              name={input.name}
+              value={this.state.form[input.name] || ""}
+              id={input.name}
+              label={input.label}
+              onChange={this.handleInputChanges}
+              variant={input.variant}
+              type={input.type}
+            />
+          ))}
+          <Button onClick={this.handleCreateUser} variant="contained" color="primary">Cadastrar</Button>
+        </FormContainer>
       </MainContainer>
     );
   }
@@ -93,8 +93,8 @@ class SignUpPage extends Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-      createUser: (email, password, username) => dispatch(createUser(email, password, username)),
-  }  
+    createUser: (email, password, username) => dispatch(createUser(email, password, username)),
+  }
 }
 
 export default connect(null, mapDispatchToProps)(SignUpPage);

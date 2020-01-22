@@ -2,7 +2,7 @@ import axios from 'axios';
 import { push } from "connected-react-router";
 import { routes } from "../containers/Router";
 
-export const login = (email, password) => async (dispatch) =>{
+export const login = (email, password) => async (dispatch) => {
     const loginInformation = {
         email,
         password,
@@ -13,8 +13,8 @@ export const login = (email, password) => async (dispatch) =>{
         window.localStorage.setItem("token", response.data.token);
 
         dispatch(push(routes.feed))
-        
-    } catch(error) {
+
+    } catch (error) {
         window.alert("Login Invalido")
     }
 }

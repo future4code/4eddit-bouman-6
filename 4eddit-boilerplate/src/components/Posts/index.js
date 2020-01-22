@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import { push } from "connected-react-router";
 import { routes } from "../../containers/Router/index";
 import { connect } from "react-redux";
-import { postVote,setPostIdSelected } from '../../actions/posts';
+import { postVote, setPostIdSelected } from '../../actions/posts';
 
 const ContainerPosts = styled.div`
 width:30%;
@@ -39,55 +39,54 @@ const ArrowDown = styled.span`
 
 class Posts extends React.Component {
     constructor(props) {
-        super(props);        
-      }
+        super(props);
+    }
 
-      handleGoToPagePostDetails = (postId) =>{
+    handleGoToPagePostDetails = (postId) => {
         this.props.setPostIdSelected(postId)
         this.props.goToPostDetails()
         console.log("testando post id: ", this.props.post.id)
     }
 
-    render(){
-    return (
-        <ContainerPosts>
-            <Card>
-                
-                <CardContent onClick={()=> this.handleGoToPagePostDetails(this.props.post.id)}>
-                    <Typography variant="h5" gutterBottom>
-                        {this.props.post.username}
-                    </Typography>
-                    <hr />
-                    <Typography  >
+    render() {
+        return (
+            <ContainerPosts>
+                <Card>
+                    <CardContent key={this.props.post.id} onClick={() => this.handleGoToPagePostDetails(this.props.post.id)}>
+                        <Typography variant="h5" gutterBottom>
+                            {this.props.post.username}
+                        </Typography>
+                        <hr />
+                        <Typography>
 
-                       {this.props.post.text}
+                            {this.props.post.text}
 
-                    </Typography>
-                    <hr />
-                    <Typography variant="body2" component="p">
+                        </Typography>
+                        <hr />
+                        <Typography variant="body2" component="p">
 
-                    </Typography>
-                </CardContent>
-                <CardActions>
+                        </Typography>
+                    </CardContent>
+                    <CardActions>
                         <ContainerPostsCount>
-                            <ArrowUp onClick={() => {this.props.postVote(+1, this.props.post.id)}}>⬆</ArrowUp>
+                            <ArrowUp onClick={() => { this.props.postVote(+1, this.props.post.id) }}>⬆</ArrowUp>
                             <span>{this.props.post.userVoteDirection}</span>
-                            <ArrowDown onClick={() => {this.props.postVote(-1, this.props.post.id)}}>⬇</ArrowDown>
+                            <ArrowDown onClick={() => { this.props.postVote(-1, this.props.post.id) }}>⬇</ArrowDown>
                         </ContainerPostsCount>
                         <div>
                             <span>comentários</span>
                             <NumberOfComments>0</NumberOfComments>
                         </div>
-                </CardActions>
-            </Card>
-        </ContainerPosts>
-    )
-}
+                    </CardActions>
+                </Card>
+            </ContainerPosts>
+        )
+    }
 }
 
-const mapDispatchToProps = dispatch =>({
-    postVote: (direction,postId) => dispatch(postVote(direction,postId)),
-    goToPostDetails: () =>  dispatch(push(routes.post)),
+const mapDispatchToProps = dispatch => ({
+    postVote: (direction, postId) => dispatch(postVote(direction, postId)),
+    goToPostDetails: () => dispatch(push(routes.post)),
     setPostIdSelected: (postId) => dispatch(setPostIdSelected(postId))
 })
 

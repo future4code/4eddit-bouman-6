@@ -7,28 +7,12 @@ import Posts from '../../components/Posts'
 import { push } from "connected-react-router";
 import { routes } from "../Router";
 import { connect } from "react-redux";
-import { getPosts,createPost } from "../../actions/posts";
+import { getPosts, createPost } from "../../actions/posts";
 
 const StyledImg = styled.img`
    max-width: 20%;
    height: auto;
 `
-
-const formFeed = [
-    {
-      name: "title",
-      type: "text",
-      label: "Título",
-      required: true,
-      
-    },
-    {
-      name: "text",
-      type: "text",
-      label: "Escreva seu post",
-      required: true
-    }
-  ]
 
 const Container = styled.div`
     margin:auto;
@@ -45,56 +29,72 @@ const ContainerButton = styled.div`
     border-bottom: solid 2px #b65036;
 `
 
+const formFeed = [
+    {
+        name: "title",
+        type: "text",
+        label: "Título",
+        required: true,
+
+    },
+    {
+        name: "text",
+        type: "text",
+        label: "Escreva seu post",
+        required: true
+    }
+]
+
 class Feed extends Component {
     constructor(props) {
         super(props);
         this.state = {
-          form: {},
+            form: {},
         };
-      }
+    }
 
-    componentDidMount(){
+    componentDidMount() {
         this.props.getPosts()
     }
 
     handleFieldChange = event => {
-        const { name, value } = event.target;    
+        const { name, value } = event.target;
         this.setState({ form: { ...this.state.form, [name]: value } });
-      };
+    };
 
-      sendNewPost = (event) => {
-          event.preventDefault()
-          const { title, text } = this.state.form
-          this.props.createPost(title,text)
-      }     
+    sendNewPost = (event) => {
+        event.preventDefault()
+        const { title, text } = this.state.form
+        this.props.createPost(title, text)
+    }
 
-    render(){
-       
-        return(
+    render() {
+
+        return (
             <Container>
-                <StyledImg src={Logo} alt="imagem da logo"/>
+                <StyledImg src={Logo} alt="imagem da logo" />
                 <TitleFeed>Feed</TitleFeed>
-              <div>
-                <form onSubmit={this.sendPostData}>
-                    {formFeed.map( input => (
-                      <div key={input.name}>
-                          <TextField  
-                          onChange={this.handleFieldChange}
-                          name={input.name}
-                          type={input.type}
-                          label={input.label}
-                          value={this.state.form[input.name] || ""}
-                          />
-                     </div>
-                    ))}
-                    <ContainerButton>
-                        <Button onClick={this.sendNewPost} color="primary" variant="contained">Postar</Button>
-                    </ContainerButton>                         
-                </form>
-                    {this.props.getToPosts.map(post=>(
+                <div>
+                    <form onSubmit={this.sendPostData}>
+                        {formFeed.map(input => (
+                            <div key={input.name}>
+                                <TextField
+                                    onChange={this.handleFieldChange}
+                                    name={input.name}
+                                    type={input.type}
+                                    label={input.label}
+                                    value={this.state.form[input.name] || ""}
+                                />
+                            </div>
+                        ))}
+                        <ContainerButton>
+                            <Button onClick={this.sendNewPost} color="primary" variant="contained">Postar</Button>
+                        </ContainerButton>
+                    </form>
+                    {this.props.getToPosts.map(post => (
                         <Posts post={post} onClick={this.props.onClick}></Posts>
-                    ))}                   
-              </div>
+                    ))}
+                </div>
             </Container>
         )
     }
@@ -106,9 +106,9 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        createPost: (title,text) => dispatch(createPost(title,text)),
+        createPost: (title, text) => dispatch(createPost(title, text)),
         getPosts: () => dispatch(getPosts()),
-        goToPostDetails: () =>  dispatch(push(routes.post))
+        goToPostDetails: () => dispatch(push(routes.post))
     }
 }
 

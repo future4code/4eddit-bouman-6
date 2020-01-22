@@ -13,7 +13,7 @@ export const routes = {
   signup: "/signup",
 };
 
-function Router(props) {  
+function Router(props) {
   return (
     <ConnectedRouter history={props.history}>
       <Switch>

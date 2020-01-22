@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 import { routes } from '../Router'
 import Logo from '../../4eddit.png';
-import Button from '@material-ui/core/Button'
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
 import styled from 'styled-components';
 import { getPostDetail } from '../../actions/posts'
 
@@ -55,42 +56,84 @@ const CommentsContainer = styled.div`
    background: white;
 `
 
+const addComment = [
+   {
+      name: "comentario",
+      type: "text",
+      label: "Escreva seu comentário",
+      required: true,
+      variant: "outlined",
+   },
+]
+
 class PostDetails extends Component {
+   constructor(props) {
+      super(props)
+      this.state = {
+         comments: {},
+      }
+   }
 
    componentDidMount() {
       const token = window.localStorage.getItem("token")
-      if(token === null) {
+      if (token === null) {
          this.props.goToLoginPage()
       }
 
       this.props.getPostDetail(this.props.postIdSelected)
-      console.log(this.props.getPostDetail(this.props.postIdSelected), "testando")
+   }
+
+   handleInputChanges = event => {
+      const { name, value } = event.target;
+      this.setState({ comments: { ...this.state.comments, [name]: value } });
+   };
+
+   handleCreateComment = () => {
+      const { postId, text } = this.state.comments;
+      this.props.createComment(postId, text)
    }
 
    render() {
-      const {postDetail} = this.props
+      const { postDetails } = this.props
       return (
          <StyledMainContainer>
-            <StyledImg src={Logo} alt="imagem da logo"/> 
-         
+            <StyledImg src={Logo} alt="imagem da logo" />
+
             <StyledTitle>Post Details</StyledTitle>
 
             <StyledCardsContainer>
                <PostContainer>
-                  <p>{postDetail.username}</p>
-
+                  <p>{postDetails.username}</p>
+                  <p>{postDetails.text}</p>
+                  <p>{postDetails.votesCount}</p>
+                  <p>{postDetails.userVoteDirection}</p>
+                  <p>{postDetails.commentsNumber}</p>
                </PostContainer>
 
                <AddCommentContainer>
-                  <p>criar comentários no post selecionado</p>
+                  <form onSubmit={this.handleInputChanges}>
+                     {addComment.map(input => (
+                        <TextField
+                           name={input.name}
+                           value={this.state.comments[input.name] || ""}
+                           id={input.name}
+                           label={input.label}
+                           variant={input.variant}
+                           type={input.type}
+                           onChange={this.handleInputChanges}
+                           multiline
+                        />
+                     ))}
+                  </form>
+                  <Button onClick={this.handleCreateComment} color="primary" variant="contained">Comentar</Button>
                </AddCommentContainer>
 
                <CommentsContainer>
-                  <p>Lista de comentários no post selecionado</p>               
+                  <p>Lista de comentários no post selecionado</p>
                </CommentsContainer>
             </StyledCardsContainer>
 
-            <Button onClick={this.props.gotToFeedPage} color="primary" variant="contained">Voltar</Button> 
+            <Button onClick={this.props.gotToFeedPage} color="primary" variant="contained">Voltar</Button>
 
          </StyledMainContainer>
       );
@@ -99,7 +142,7 @@ class PostDetails extends Component {
 
 function mapStateToProps(state) {
    return {
-      postDetail: state.posts.postDetails,
+      postDetails: state.posts.postDetails,
       postIdSelected: state.posts.postIdSelected,
    }
 }
@@ -108,7 +151,8 @@ function mapDispatchToProps(dispatch) {
    return {
       goToLoginPage: () => dispatch(push(routes.root)),
       gotToFeedPage: () => dispatch(push(routes.feed)),
-      getPostDetail: (postId) => dispatch(getPostDetail(postId)), 
+      getPostDetail: (postId) => dispatch(getPostDetail(postId)),
+      //createComment: (postId, text) => dispatch(createComment(postId, text)),
    }
 }
 
