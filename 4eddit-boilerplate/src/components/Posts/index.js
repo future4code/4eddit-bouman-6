@@ -9,7 +9,6 @@ import { routes } from "../../containers/Router/index";
 import { connect } from "react-redux";
 import { postVote,setPostIdSelected } from '../../actions/posts';
 
-
 const ContainerPosts = styled.div`
 width:30%;
 margin:20px auto;
@@ -17,33 +16,30 @@ cursor:pointer;
 `
 
 const ContainerPostsCount = styled.div`
-margin-left:10px;
-margin-right:160px;
+    margin-left:10px;
+    margin-right:160px;
 `
 
 const NumberOfComments = styled.span`
-margin-left:5px;
+    margin-left:5px;
 `
 const ArrowUp = styled.span`
-cursor:pointer;
-font-size:17px;
-margin-right:2px;
-color:green;
+    cursor:pointer;
+    font-size:17px;
+    margin-right:2px;
+    color:green;
 `
 
 const ArrowDown = styled.span`
-cursor:pointer;
-font-size:17px;
-margin-left:2px;
-color:red;
+    cursor:pointer;
+    font-size:17px;
+    margin-left:2px;
+    color:red;
 `
-
-
 
 class Posts extends React.Component {
     constructor(props) {
-        super(props);
-        
+        super(props);        
       }
 
       handleGoToPagePostDetails = (postId) =>{
@@ -53,7 +49,6 @@ class Posts extends React.Component {
     }
 
     render(){
-        
     return (
         <ContainerPosts>
             <Card>
@@ -62,13 +57,15 @@ class Posts extends React.Component {
                     <Typography variant="h5" gutterBottom>
                         {this.props.post.username}
                     </Typography>
-                    <hr/>
+                    <hr />
                     <Typography  >
+
                        {this.props.post.text}
+
                     </Typography>
-                   <hr/>
+                    <hr />
                     <Typography variant="body2" component="p">
-                      
+
                     </Typography>
                 </CardContent>
                 <CardActions>
@@ -80,7 +77,7 @@ class Posts extends React.Component {
                         <div>
                             <span>comentários</span>
                             <NumberOfComments>0</NumberOfComments>
-                        </div> 
+                        </div>
                 </CardActions>
             </Card>
         </ContainerPosts>
@@ -91,7 +88,7 @@ class Posts extends React.Component {
 const mapDispatchToProps = dispatch =>({
     postVote: (direction,postId) => dispatch(postVote(direction,postId)),
     goToPostDetails: () =>  dispatch(push(routes.post)),
-    setPostIdSelected: (postId) => dispatch(setPostIdSelected(postId)) 
+    setPostIdSelected: (postId) => dispatch(setPostIdSelected(postId))
 })
 
 

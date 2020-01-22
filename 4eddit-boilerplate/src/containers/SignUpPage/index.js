@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import TextField from '@material-ui/core/TextField';
-import { connect } from "react-redux"; 
-//import { push } from "connected-react-router";
-//import { routes } from '../Router';
+import { connect } from "react-redux";
 import Button from '@material-ui/core/Button';
 import Logo from '../../4eddit.png';
 import styled from 'styled-components';
@@ -13,7 +11,7 @@ const MainContainer = styled.div`
 `
 
 const StyledImg = styled.img`
-  width: 30vw;
+  max-width: 20vw;
   height: auto;
 `
 
@@ -21,13 +19,6 @@ const FormContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-`
-
-const StyledButton = styled(Button)`
-  color: white;
-  font-weight: bold;
-  margin-top: 20px;
-  background: #b65036;
 `
 
 const StyledTextField = styled(TextField)`
@@ -56,7 +47,6 @@ const signUpForm = [
     label: "Senha",
     required: true,
     variant: "outlined",
-
   }
 ]
 
@@ -76,7 +66,7 @@ class SignUpPage extends Component {
   handleCreateUser = () => {
     const { email, password, username } = this.state.form
     this.props.createUser(email,password,username)
-  }
+  }  
   
   render() {
     return (
@@ -94,7 +84,7 @@ class SignUpPage extends Component {
                   type={input.type}
                 />
             ))}
-            <StyledButton onClick={this.handleCreateUser} variant="contained" color="primary">Cadastrar</StyledButton>
+            <Button onClick={this.handleCreateUser} variant="contained" color="primary">Cadastrar</Button>
           </FormContainer>
       </MainContainer>
     );
