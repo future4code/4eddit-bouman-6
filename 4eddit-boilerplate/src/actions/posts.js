@@ -66,7 +66,7 @@ export const getPostDetailAction = (postId) => ({
     }
 })
 
-export const getPostDetail = () => async (dispatch) => {
+export const getPostDetail = (postId) => async (dispatch) => {
     const token = window.localStorage.getItem("token")
     const axiosHeader = {
         headers: {
@@ -75,12 +75,14 @@ export const getPostDetail = () => async (dispatch) => {
     }
 
     try {
-        const response = await axios.get(`${baseURL}/posts/:postId`, axiosHeader)
+        const response = await axios.get(`${baseURL}/posts/${postId}`, axiosHeader)
         dispatch(getPostDetailAction(response.data.post))
-        dispatch(push(routes.post))
 
     } catch (error) {
         window.alert("Falha ao carregar detalhes da postagem!")
+
+    }
+}
 
 export const postVote = (direction,postId) => async (dispatch) => {
     const token = window.localStorage.getItem("token");
@@ -106,3 +108,12 @@ export const postVote = (direction,postId) => async (dispatch) => {
         window.alert("erro no voto")
     }
 }
+
+//  
+
+export const setPostIdSelected = (postIdSelected) =>({
+    type: 'SET_POST_ID',
+    payload: {
+        postIdSelected,
+    }
+})

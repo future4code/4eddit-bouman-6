@@ -3,6 +3,8 @@ import styled from "styled-components";
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Posts from '../../components/Posts'
+import { push } from "connected-react-router";
+import { routes } from "../Router";
 import { connect } from "react-redux";
 import { getPosts,createPost } from "../../actions/posts"
 
@@ -66,6 +68,8 @@ class Feed extends Component {
           this.props.createPost(title,text)
       }
 
+     
+
     render(){
        
         return(
@@ -87,15 +91,11 @@ class Feed extends Component {
 
                     <ContainerButton>
                         <Button onClick={this.sendNewPost} color="primary" variant="contained">Postar</Button>
-                    </ContainerButton>
-                        
-                    
+                    </ContainerButton>                         
                 </form>
-
                     {this.props.getToPosts.map(post=>(
-                        <Posts post={post}></Posts>
-                    ))}
-                    
+                        <Posts post={post} onClick={this.props.onClick}></Posts>
+                    ))}                   
             </div> 
             </Container>
 
@@ -111,6 +111,7 @@ const mapDispatchToProps = (dispatch) => {
     return {
         createPost: (title,text) => dispatch(createPost(title,text)),
         getPosts: () => dispatch(getPosts()),
+        goToPostDetails: () =>  dispatch(push(routes.post))
     }
 }
 
