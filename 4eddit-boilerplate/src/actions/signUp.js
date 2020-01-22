@@ -11,13 +11,13 @@ export const createUser = (email, password, username) => async (dispatch) => {
       username,
    }
 
-   try{
+   try {
       const response = await axios.post(`${baseURL}/signup`, newUser)
       window.localStorage.setItem("token", response.data.token)
 
       dispatch(push(routes.feed))
 
-   }catch(error) {
+   } catch (error) {
       window.alert("Erro ao criar usuário!")
-   }   
+   }
 }

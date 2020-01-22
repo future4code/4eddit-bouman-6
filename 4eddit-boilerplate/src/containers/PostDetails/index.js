@@ -72,21 +72,46 @@ const NumberOfComments = styled.span`
 margin-left:5px;
 `
 
+const addComment = [
+   {
+      name: "comentario",
+      type: "text",
+      label: "Escreva seu comentário",
+      required: true,
+      variant: "outlined",
+   },
+]
+
 class PostDetails extends Component {
+   constructor(props) {
+      super(props)
+      this.state = {
+         comments: {},
+      }
+   }
 
    componentDidMount() {
       const token = window.localStorage.getItem("token")
-      if(token === null) {
+      if (token === null) {
          this.props.goToLoginPage()
          window.alert("Área restrita. Faça seu login")
       }
 
       this.props.getPostDetail(this.props.postIdSelected)
-      
+   }
+
+   handleInputChanges = event => {
+      const { name, value } = event.target;
+      this.setState({ comments: { ...this.state.comments, [name]: value } });
+   };
+
+   handleCreateComment = () => {
+      const { postId, text } = this.state.comments;
+      this.props.createComment(postId, text)
    }
 
    render() {
-      const {postDetail} = this.props
+      const { postDetails } = this.props
       return (
          <StyledMainContainer>
             <StyledImg src={Logo} alt="imagem da logo"/> 
@@ -118,15 +143,29 @@ class PostDetails extends Component {
                </Card>
 
                <AddCommentContainer>
-                  <p>criar comentários no post selecionado</p>
+                  <form onSubmit={this.handleInputChanges}>
+                     {addComment.map(input => (
+                        <TextField
+                           name={input.name}
+                           value={this.state.comments[input.name] || ""}
+                           id={input.name}
+                           label={input.label}
+                           variant={input.variant}
+                           type={input.type}
+                           onChange={this.handleInputChanges}
+                           multiline
+                        />
+                     ))}
+                  </form>
+                  <Button onClick={this.handleCreateComment} color="primary" variant="contained">Comentar</Button>
                </AddCommentContainer>
 
                <CommentsContainer>
-                  <p>Lista de comentários no post selecionado</p>               
+                  <p>Lista de comentários no post selecionado</p>
                </CommentsContainer>
             </StyledCardsContainer>
 
-            <Button onClick={this.props.gotToFeedPage} color="primary" variant="contained">Voltar</Button> 
+            <Button onClick={this.props.gotToFeedPage} color="primary" variant="contained">Voltar</Button>
 
          </StyledMainContainer>
       );
@@ -135,7 +174,7 @@ class PostDetails extends Component {
 
 function mapStateToProps(state) {
    return {
-      postDetail: state.posts.postDetails,
+      postDetails: state.posts.postDetails,
       postIdSelected: state.posts.postIdSelected,
    }
 }
@@ -146,6 +185,7 @@ function mapDispatchToProps(dispatch) {
       gotToFeedPage: () => dispatch(push(routes.feed)),
       getPostDetail: (postId) => dispatch(getPostDetail(postId)), 
       postVote: (direction,postId) => dispatch(postVote(direction,postId)),
+      //createComment: (postId, text) => dispatch(createComment(postId, text)),
    }
 }
 

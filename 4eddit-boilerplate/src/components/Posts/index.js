@@ -7,8 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import { push } from "connected-react-router";
 import { routes } from "../../containers/Router/index";
 import { connect } from "react-redux";
-import { postVote,setPostIdSelected } from '../../actions/posts';
-
+import { postVote, setPostIdSelected } from '../../actions/posts';
 
 const ContainerPosts = styled.div`
 width:30%;
@@ -37,16 +36,12 @@ font-size:17px;
 margin-left:2px;
 color:red;
 `
-
-
-
 class Posts extends React.Component {
     constructor(props) {
         super(props);
-        
-      }
+    }
 
-      handleGoToPagePostDetails = (postId) =>{
+    handleGoToPagePostDetails = (postId) => {
         this.props.setPostIdSelected(postId)
         this.props.goToPostDetails()
         console.log("testando post id: ", this.props.post.id)
@@ -69,9 +64,9 @@ class Posts extends React.Component {
                 </CardContent>
                 <CardActions>
                         <ContainerPostsCount>
-                            <ArrowUp onClick={() => {this.props.postVote(+1, this.props.post.id)}}>⬆</ArrowUp>
+                            <ArrowUp onClick={() => { this.props.postVote(+1, this.props.post.id) }}>⬆</ArrowUp>
                             <span>{this.props.post.userVoteDirection}</span>
-                            <ArrowDown onClick={() => {this.props.postVote(-1, this.props.post.id)}}>⬇</ArrowDown>
+                            <ArrowDown onClick={() => { this.props.postVote(-1, this.props.post.id) }}>⬇</ArrowDown>
                         </ContainerPostsCount>
                         <div>
                             <span>comentários</span>
@@ -81,15 +76,13 @@ class Posts extends React.Component {
             </Card>
         </ContainerPosts>
     )
-}
+  }
 }
 
 const mapDispatchToProps = dispatch =>({
     postVote: (direction,postId) => dispatch(postVote(direction,postId)),
     goToPostDetails: () =>  dispatch(push(routes.post)),
-    setPostIdSelected: (postId) => dispatch(setPostIdSelected(postId)) 
+    setPostIdSelected: (postId) => dispatch(setPostIdSelected(postId))
 })
-
-
 
 export default connect(null, mapDispatchToProps)(Posts);

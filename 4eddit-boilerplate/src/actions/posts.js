@@ -1,6 +1,4 @@
 import axios from 'axios';
-import { push } from 'connected-react-router';
-import { routes } from '../containers/Router';
 
 const baseURL = "https://us-central1-missao-newton.cloudfunctions.net/fourEddit"
 
@@ -46,11 +44,7 @@ export const createPost = (text, title) => async (dispatch) => {
     }
 
     try {
-        const response = await axios.post(
-            "https://us-central1-missao-newton.cloudfunctions.net/fourEddit/posts",
-            postInformation,
-            axiosHeader,
-        )
+        const response = await axios.post(`${baseURL}/posts`, postInformation, axiosHeader)
         dispatch(getPosts())
     } catch (erros) {
         window.alert("Erro ao criar post")
@@ -83,9 +77,9 @@ export const getPostDetail = (postId) => async (dispatch) => {
     }
 }
 
-//
+// ADICIONA LIKE OU DISLIKE EM UM POST
 
-export const postVote = (direction,postId) => async (dispatch) => {
+export const postVote = (direction, postId) => async (dispatch) => {
     const token = window.localStorage.getItem("token");
     const axiosHeader = {
         headers: {
@@ -99,7 +93,7 @@ export const postVote = (direction,postId) => async (dispatch) => {
 
     try {
         const response = await axios.put(
-            `https://us-central1-missao-newton.cloudfunctions.net/fourEddit/posts/${postId}/vote`,
+            `${baseURL}/posts/${postId}/vote`,
             informationVote,
             axiosHeader,
         )
@@ -110,11 +104,33 @@ export const postVote = (direction,postId) => async (dispatch) => {
     }
 }
 
-//  
+//
 
-export const setPostIdSelected = (postIdSelected) =>({
+export const setPostIdSelected = (postIdSelected) => ({
     type: 'SET_POST_ID',
     payload: {
         postIdSelected,
     }
 })
+
+// CRIAR E ADICIONAR COMENTÁRIOS NO POST SELECIONADO
+
+export const createComment = (postId, text) => async (dispatch) => {
+    const token = window.localStorage.getItem("token");
+    const axiosHeader = {
+        headers: {
+            auth: token,
+        }        
+    }
+
+    const textInfo = {
+        text,
+    }
+
+    try {
+        const response = await axios.post(`${baseURL}/posts/${postId}/comment`, textInfo, axiosHeader)
+        dispatch(getPostDetail(postId))
+    } catch(error) {
+        window.alert("Erro ao tentar criar um comentário.")
+    }
+}
