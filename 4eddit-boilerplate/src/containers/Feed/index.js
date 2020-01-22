@@ -2,11 +2,15 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import Posts from '../../components/Posts'
+import Posts from '../../components/Posts';
+import Logo from '../../4eddit.png'
 import { connect } from "react-redux";
-import { getPosts,createPost } from "../../actions/posts"
+import { getPosts,createPost } from "../../actions/posts";
 
-
+const StyledImg = styled.img`
+   max-width: 15%;
+   height: auto;
+`
 
 const formFeed = [
     {
@@ -24,22 +28,20 @@ const formFeed = [
     }
   ]
 
-
-
 const Container = styled.div`
-margin:auto;
-text-align:center;
-width:80%;
+    margin:auto;
+    text-align:center;
+    width:80%;
 `
 
 const TitleFeed = styled.h1`
-font-size:40px;
+    font-size:40px;
 `
 
 const ContainerButton = styled.div`
-margin-top:15px;
-padding-bottom:20px;
-border-bottom: solid 2px #ED7F61;
+    margin-top:15px;
+    padding-bottom:20px;
+    border-bottom: solid 2px #b65036;
 `
 
 class Feed extends Component {
@@ -70,33 +72,31 @@ class Feed extends Component {
        
         return(
             <Container>
+                <StyledImg src={Logo} alt="imagem da logo"/>
                 <TitleFeed>Feed</TitleFeed>
-            <div>
-                <form onSubmit={this.sendPostData}>
-                    {formFeed.map( input => (
-                    <div key={input.name}>
-                        <TextField  
-                        onChange={this.handleFieldChange}
-                        name={input.name}
-                        type={input.type}
-                        label={input.label}
-                        value={this.state.form[input.name] || ""}
-                        />
-                    </div>
-                    ))}
+                <div>
+                    <form onSubmit={this.sendPostData}>
+                        {formFeed.map( input => (
+                        <div key={input.name}>
+                            <TextField  
+                            onChange={this.handleFieldChange}
+                            name={input.name}
+                            type={input.type}
+                            label={input.label}
+                            value={this.state.form[input.name] || ""}
+                            />
+                        </div>
+                        ))}
 
-                    <ContainerButton>
-                        <Button onClick={this.sendNewPost} color="primary" variant="contained">Postar</Button>
-                    </ContainerButton>
-                        
-                    
-                </form>
+                        <ContainerButton>
+                            <Button onClick={this.sendNewPost} color="primary" variant="contained">Postar</Button>
+                        </ContainerButton> 
+                    </form>
 
-                    {this.props.getToPosts.map(post=>(
-                        <Posts post={post}></Posts>
-                    ))}
-                    
-            </div> 
+                        {this.props.getToPosts.map(post=>(
+                            <Posts post={post}></Posts>
+                        ))}                        
+                </div> 
             </Container>
 
         )

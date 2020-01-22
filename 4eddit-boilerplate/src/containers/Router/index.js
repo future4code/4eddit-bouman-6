@@ -17,7 +17,7 @@ function Router(props) {
   return (
     <ConnectedRouter history={props.history}>
       <Switch>
-        <Route exact path={routes.root} component={PostDetails} />
+        <Route exact path={routes.root} component={LoginPage} />
         <Route path={routes.feed} component={Feed} />
         <Route path={routes.signup} component={SignUpPage} />
         <Route path={routes.post} component={PostDetails} />

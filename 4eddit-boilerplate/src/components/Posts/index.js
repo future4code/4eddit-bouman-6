@@ -7,36 +7,34 @@ import Typography from '@material-ui/core/Typography';
 import { connect } from "react-redux";
 import { postVote } from '../../actions/posts';
 
-
 const ContainerPosts = styled.div`
-width:30%;
-margin:20px auto;
+    width:30%;
+    margin:20px auto;
 `
 
 const ContainerPostsCount = styled.div`
-margin-left:10px;
-margin-right:160px;
+    margin-left:10px;
+    margin-right:160px;
 `
 
 const NumberOfComments = styled.span`
-margin-left:5px;
+    margin-left:5px;
 `
 const ArrowUp = styled.span`
-cursor:pointer;
-font-size:17px;
-margin-right:2px;
-color:green;
+    cursor:pointer;
+    font-size:17px;
+    margin-right:2px;
+    color:green;
 `
 
 const ArrowDown = styled.span`
-cursor:pointer;
-font-size:17px;
-margin-left:2px;
-color:red;
+    cursor:pointer;
+    font-size:17px;
+    margin-left:2px;
+    color:red;
 `
 
-
-function Posts (props){
+function Posts(props) {
     return (
         <ContainerPosts>
             <Card>
@@ -44,33 +42,33 @@ function Posts (props){
                     <Typography variant="h5" gutterBottom>
                         {props.post.username}
                     </Typography>
-                    <hr/>
+                    <hr />
                     <Typography  >
-                       {props.post.text}
+                        {props.post.text}
                     </Typography>
-                   <hr/>
+                    <hr />
                     <Typography variant="body2" component="p">
-                      
+
                     </Typography>
                 </CardContent>
                 <CardActions>
-                        <ContainerPostsCount>
-                            <ArrowUp onClick={() => {props.postVote(+1, props.post.id)}}>⬆</ArrowUp>
-                            <span>{props.post.userVoteDirection}</span>
-                            <ArrowDown onClick={() => {props.postVote(-1, props.post.id)}}>⬇</ArrowDown>
-                        </ContainerPostsCount>
-                        <div>
-                            <span>comentários</span>
-                            <NumberOfComments>0</NumberOfComments>
-                        </div> 
+                    <ContainerPostsCount>
+                        <ArrowUp onClick={() => { props.postVote(+1, props.post.id) }}>⬆</ArrowUp>
+                        <span>{props.post.userVoteDirection}</span>
+                        <ArrowDown onClick={() => { props.postVote(-1, props.post.id) }}>⬇</ArrowDown>
+                    </ContainerPostsCount>
+                    <div>
+                        <span>comentários</span>
+                        <NumberOfComments>0</NumberOfComments>
+                    </div>
                 </CardActions>
             </Card>
         </ContainerPosts>
     )
 }
 
-const mapDispatchToProps = dispatch =>({
-    postVote: (direction,postId) => dispatch(postVote(direction,postId))
+const mapDispatchToProps = dispatch => ({
+    postVote: (direction, postId) => dispatch(postVote(direction, postId))
 })
 
 export default connect(null, mapDispatchToProps)(Posts);

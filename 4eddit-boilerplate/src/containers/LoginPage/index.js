@@ -1,17 +1,19 @@
 import React, { Component } from "react";
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import styled from "styled-components";
 import { login } from '../../actions/login';
 import { connect } from "react-redux"; 
 import { push } from "connected-react-router"; 
 import { routes } from "../Router";
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import Logo from '../../4eddit.png'
+import styled from "styled-components";
 
-
+const StyledImg = styled.img`
+   max-width: 50%;
+   height: auto;
+`
 
 const Container = styled.form`
- width: 100%;
-  height: 100vh;
   gap: 10px;
   place-content: center;
   justify-items: center;
@@ -21,8 +23,6 @@ const Container = styled.form`
 const P = styled.p`
 font-size:12px;
 `
-
-
 
 class LoginPage extends Component {
   constructor(props){
@@ -43,11 +43,11 @@ class LoginPage extends Component {
     this.props.login(this.state.email, this.state.password)
   }
 
-
   render() {
     const { email, password } = this.state;
     return (
       <Container>
+        <StyledImg src={Logo} alt="imagem da logo"/>
         <h1>Login</h1>
         <TextField  
           onChange={this.handleFieldChange}
@@ -65,7 +65,7 @@ class LoginPage extends Component {
           value={password} 
         />
         <Button onClick={this.handleLoginButton } color="primary" variant="contained">Entrar</Button>
-        <Button onClick={this.props.goToRegister}>Cadastrar</Button>
+        <Button onClick={this.props.goToRegister} color="primary" variant="contained">Cadastrar</Button>
       </Container>
     );
   }

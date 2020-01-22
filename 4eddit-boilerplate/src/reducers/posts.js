@@ -1,6 +1,6 @@
 const initialState = {
     allPosts: [],
-    postDetails: [],
+    postDetails: undefined,
 }
 
 const postsReducer = (state = initialState, action) => {
@@ -9,7 +9,7 @@ const postsReducer = (state = initialState, action) => {
             const postList = action.payload.allPosts;
             return { ...state, allPosts: postList }
         
-        case "GET_POST_DETAIL":        
+        case "GET_POST_DETAIL":     
             return { ... state, postDetails: action.payload.postId }
 
          default:
