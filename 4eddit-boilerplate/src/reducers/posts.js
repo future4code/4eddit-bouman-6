@@ -1,6 +1,6 @@
 const initialState = {
     allPosts: [],
-    postDetails: [],
+    postDetails: {},
     postIdSelected: "",
 }
 
@@ -10,11 +10,12 @@ const postsReducer = (state = initialState, action) => {
             const postList = action.payload.allPosts;
             return { ...state, allPosts: postList }
         
-        case "SET_POST_DETAIL":        
-            return { ... state, postDetails: action.payload.post }
+        case "SET_POST_DETAIL":
+            const post = action.payload.post;
+            return { ... state, postDetails: post }
 
         case "SET_POST_ID":
-            const postId = action.payload.postIdSelected
+            const postId = action.payload.postIdSelected;
             return  { ...state, postIdSelected: postId }
 
          default:

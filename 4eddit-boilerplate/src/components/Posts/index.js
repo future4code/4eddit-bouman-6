@@ -91,6 +91,4 @@ const mapDispatchToProps = dispatch =>({
     setPostIdSelected: (postId) => dispatch(setPostIdSelected(postId))
 })
 
-
-
 export default connect(null, mapDispatchToProps)(Posts);
