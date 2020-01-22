@@ -5,6 +5,7 @@ import { routes } from '../Router'
 import Logo from '../../4eddit.png';
 import Button from '@material-ui/core/Button'
 import styled from 'styled-components';
+import { getPostDetail } from '../../actions/posts'
 
 const StyledMainContainer = styled.div`
    text-align: center;
@@ -61,9 +62,13 @@ class PostDetails extends Component {
       if(token === null) {
          this.props.goToLoginPage()
       }
+
+      this.props.getPostDetail(this.props.postIdSelected)
+      console.log(this.props.getPostDetail(this.props.postIdSelected), "testando")
    }
 
    render() {
+      const {postDetail} = this.props
       return (
          <StyledMainContainer>
             <StyledImg src={Logo} alt="imagem da logo"/> 
@@ -72,7 +77,8 @@ class PostDetails extends Component {
 
             <StyledCardsContainer>
                <PostContainer>
-                  <p>Post selecionado</p>              
+                  <p>{postDetail.username}</p>
+
                </PostContainer>
 
                <AddCommentContainer>
@@ -94,6 +100,7 @@ class PostDetails extends Component {
 function mapStateToProps(state) {
    return {
       postDetail: state.posts.postDetails,
+      postIdSelected: state.posts.postIdSelected,
    }
 }
 
@@ -101,6 +108,7 @@ function mapDispatchToProps(dispatch) {
    return {
       goToLoginPage: () => dispatch(push(routes.root)),
       gotToFeedPage: () => dispatch(push(routes.feed)),
+      getPostDetail: (postId) => dispatch(getPostDetail(postId)), 
    }
 }
 

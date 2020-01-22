@@ -10,7 +10,7 @@ import { connect } from "react-redux";
 import { getPosts,createPost } from "../../actions/posts";
 
 const StyledImg = styled.img`
-   max-width: 15%;
+   max-width: 20%;
    height: auto;
 `
 
@@ -33,7 +33,6 @@ const formFeed = [
 const Container = styled.div`
     margin:auto;
     text-align:center;
-    width:80%;
 `
 
 const TitleFeed = styled.h1`
@@ -59,8 +58,7 @@ class Feed extends Component {
     }
 
     handleFieldChange = event => {
-        const { name, value } = event.target;
-    
+        const { name, value } = event.target;    
         this.setState({ form: { ...this.state.form, [name]: value } });
       };
 
@@ -75,7 +73,7 @@ class Feed extends Component {
         return(
             <Container>
                 <StyledImg src={Logo} alt="imagem da logo"/>
-                <TitleFeed>Feed</TitleFeed>=======
+                <TitleFeed>Feed</TitleFeed>
               <div>
                 <form onSubmit={this.sendPostData}>
                     {formFeed.map( input => (

@@ -59,10 +59,10 @@ export const createPost = (text, title) => async (dispatch) => {
 
 //PEGAR O POST CLICADO E ENVIAR PARA PÁGINA DE DETALHES
 
-export const getPostDetailAction = (postId) => ({
-    type: "GET_POST_DETAIL",
+export const getPostDetailAction = (post) => ({
+    type: "SET_POST_DETAIL",
     payload: {
-        postId,
+        post,
     }
 })
 
@@ -82,6 +82,8 @@ export const getPostDetail = (postId) => async (dispatch) => {
         window.alert("Falha ao carregar detalhes da postagem!")
     }
 }
+
+//
 
 export const postVote = (direction,postId) => async (dispatch) => {
     const token = window.localStorage.getItem("token");
