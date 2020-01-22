@@ -4,12 +4,15 @@ import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
+import { push } from "connected-react-router";
+import { routes } from "../../containers/Router/index";
 import { connect } from "react-redux";
-import { postVote } from '../../actions/posts';
+import { postVote,setPostIdSelected } from '../../actions/posts';
 
 const ContainerPosts = styled.div`
-    width:30%;
-    margin:20px auto;
+width:30%;
+margin:20px auto;
+cursor:pointer;
 `
 
 const ContainerPostsCount = styled.div`
@@ -34,17 +37,31 @@ const ArrowDown = styled.span`
     color:red;
 `
 
-function Posts(props) {
+class Posts extends React.Component {
+    constructor(props) {
+        super(props);        
+      }
+
+      handleGoToPagePostDetails = (postId) =>{
+        this.props.setPostIdSelected(postId)
+        this.props.goToPostDetails()
+        console.log("testando post id: ", this.props.post.id)
+    }
+
+    render(){
     return (
         <ContainerPosts>
             <Card>
-                <CardContent>
+                
+                <CardContent onClick={()=> this.handleGoToPagePostDetails(this.props.post.id)}>
                     <Typography variant="h5" gutterBottom>
-                        {props.post.username}
+                        {this.props.post.username}
                     </Typography>
                     <hr />
                     <Typography  >
-                        {props.post.text}
+
+                       {this.props.post.text}
+
                     </Typography>
                     <hr />
                     <Typography variant="body2" component="p">
@@ -52,23 +69,28 @@ function Posts(props) {
                     </Typography>
                 </CardContent>
                 <CardActions>
-                    <ContainerPostsCount>
-                        <ArrowUp onClick={() => { props.postVote(+1, props.post.id) }}>⬆</ArrowUp>
-                        <span>{props.post.userVoteDirection}</span>
-                        <ArrowDown onClick={() => { props.postVote(-1, props.post.id) }}>⬇</ArrowDown>
-                    </ContainerPostsCount>
-                    <div>
-                        <span>comentários</span>
-                        <NumberOfComments>0</NumberOfComments>
-                    </div>
+                        <ContainerPostsCount>
+                            <ArrowUp onClick={() => {this.props.postVote(+1, this.props.post.id)}}>⬆</ArrowUp>
+                            <span>{this.props.post.userVoteDirection}</span>
+                            <ArrowDown onClick={() => {this.props.postVote(-1, this.props.post.id)}}>⬇</ArrowDown>
+                        </ContainerPostsCount>
+                        <div>
+                            <span>comentários</span>
+                            <NumberOfComments>0</NumberOfComments>
+                        </div>
                 </CardActions>
             </Card>
         </ContainerPosts>
     )
 }
+}
 
-const mapDispatchToProps = dispatch => ({
-    postVote: (direction, postId) => dispatch(postVote(direction, postId))
+const mapDispatchToProps = dispatch =>({
+    postVote: (direction,postId) => dispatch(postVote(direction,postId)),
+    goToPostDetails: () =>  dispatch(push(routes.post)),
+    setPostIdSelected: (postId) => dispatch(setPostIdSelected(postId))
 })
+
+
 
 export default connect(null, mapDispatchToProps)(Posts);

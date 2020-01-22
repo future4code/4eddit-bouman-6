@@ -2,8 +2,10 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import Posts from '../../components/Posts';
 import Logo from '../../4eddit.png'
+import Posts from '../../components/Posts'
+import { push } from "connected-react-router";
+import { routes } from "../Router";
 import { connect } from "react-redux";
 import { getPosts,createPost } from "../../actions/posts";
 
@@ -66,39 +68,36 @@ class Feed extends Component {
           event.preventDefault()
           const { title, text } = this.state.form
           this.props.createPost(title,text)
-      }
+      }     
 
     render(){
        
         return(
             <Container>
                 <StyledImg src={Logo} alt="imagem da logo"/>
-                <TitleFeed>Feed</TitleFeed>
-                <div>
-                    <form onSubmit={this.sendPostData}>
-                        {formFeed.map( input => (
-                        <div key={input.name}>
-                            <TextField  
-                            onChange={this.handleFieldChange}
-                            name={input.name}
-                            type={input.type}
-                            label={input.label}
-                            value={this.state.form[input.name] || ""}
-                            />
-                        </div>
-                        ))}
-
-                        <ContainerButton>
-                            <Button onClick={this.sendNewPost} color="primary" variant="contained">Postar</Button>
-                        </ContainerButton> 
-                    </form>
-
-                        {this.props.getToPosts.map(post=>(
-                            <Posts post={post}></Posts>
-                        ))}                        
-                </div> 
+                <TitleFeed>Feed</TitleFeed>=======
+              <div>
+                <form onSubmit={this.sendPostData}>
+                    {formFeed.map( input => (
+                      <div key={input.name}>
+                          <TextField  
+                          onChange={this.handleFieldChange}
+                          name={input.name}
+                          type={input.type}
+                          label={input.label}
+                          value={this.state.form[input.name] || ""}
+                          />
+                     </div>
+                    ))}
+                    <ContainerButton>
+                        <Button onClick={this.sendNewPost} color="primary" variant="contained">Postar</Button>
+                    </ContainerButton>                         
+                </form>
+                    {this.props.getToPosts.map(post=>(
+                        <Posts post={post} onClick={this.props.onClick}></Posts>
+                    ))}                   
+              </div>
             </Container>
-
         )
     }
 }
@@ -111,6 +110,7 @@ const mapDispatchToProps = (dispatch) => {
     return {
         createPost: (title,text) => dispatch(createPost(title,text)),
         getPosts: () => dispatch(getPosts()),
+        goToPostDetails: () =>  dispatch(push(routes.post))
     }
 }
 
