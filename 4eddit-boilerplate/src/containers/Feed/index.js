@@ -55,6 +55,10 @@ class Feed extends Component {
       }
 
     componentDidMount(){
+        if (localStorage.getItem("token") === null){
+            this.props.goToLoginPage()
+            window.alert("Área restrita. Faça seu login")
+           }
         this.props.getPosts()
     }
 
@@ -110,7 +114,8 @@ const mapDispatchToProps = (dispatch) => {
     return {
         createPost: (title,text) => dispatch(createPost(title,text)),
         getPosts: () => dispatch(getPosts()),
-        goToPostDetails: () =>  dispatch(push(routes.post))
+        goToPostDetails: () =>  dispatch(push(routes.post)),
+        goToLoginPage: () => dispatch(push(routes.root)),
     }
 }
 
