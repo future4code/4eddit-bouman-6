@@ -66,9 +66,6 @@ class Posts extends React.Component {
                        {this.props.post.text}
                     </Typography>
                    <hr/>
-                    <Typography variant="body2" component="p">
-                      
-                    </Typography>
                 </CardContent>
                 <CardActions>
                         <ContainerPostsCount>
