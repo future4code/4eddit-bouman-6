@@ -10,13 +10,14 @@ import { connect } from "react-redux";
 import { getPosts, createPost } from "../../actions/posts";
 
 const StyledImg = styled.img`
-   max-width: 20%;
+   max-width: 15%;
    height: auto;
 `
 
 const Container = styled.div`
     margin:auto;
     text-align:center;
+    width:80%;
 `
 
 const TitleFeed = styled.h1`
@@ -35,7 +36,6 @@ const formFeed = [
         type: "text",
         label: "Título",
         required: true,
-
     },
     {
         name: "text",
@@ -53,7 +53,11 @@ class Feed extends Component {
         };
     }
 
-    componentDidMount() {
+    componentDidMount(){
+        if (localStorage.getItem("token") === null){
+            this.props.goToLoginPage()
+            window.alert("Área restrita. Faça seu login")
+           }
         this.props.getPosts()
     }
 
@@ -69,7 +73,6 @@ class Feed extends Component {
     }
 
     render() {
-
         return (
             <Container>
                 <StyledImg src={Logo} alt="imagem da logo" />
@@ -108,7 +111,8 @@ const mapDispatchToProps = (dispatch) => {
     return {
         createPost: (title, text) => dispatch(createPost(title, text)),
         getPosts: () => dispatch(getPosts()),
-        goToPostDetails: () => dispatch(push(routes.post))
+        goToPostDetails: () =>  dispatch(push(routes.post)),
+        goToLoginPage: () => dispatch(push(routes.root)),
     }
 }
 

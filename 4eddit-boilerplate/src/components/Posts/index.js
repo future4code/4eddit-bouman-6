@@ -16,27 +16,26 @@ cursor:pointer;
 `
 
 const ContainerPostsCount = styled.div`
-    margin-left:10px;
-    margin-right:160px;
+margin-left:10px;
+margin-right:160px;
 `
 
 const NumberOfComments = styled.span`
-    margin-left:5px;
+margin-left:5px;
 `
 const ArrowUp = styled.span`
-    cursor:pointer;
-    font-size:17px;
-    margin-right:2px;
-    color:green;
+cursor:pointer;
+font-size:17px;
+margin-right:2px;
+color:green;
 `
 
 const ArrowDown = styled.span`
-    cursor:pointer;
-    font-size:17px;
-    margin-left:2px;
-    color:red;
+cursor:pointer;
+font-size:17px;
+margin-left:2px;
+color:red;
 `
-
 class Posts extends React.Component {
     constructor(props) {
         super(props);
@@ -48,26 +47,22 @@ class Posts extends React.Component {
         console.log("testando post id: ", this.props.post.id)
     }
 
-    render() {
-        return (
-            <ContainerPosts>
-                <Card>
-                    <CardContent key={this.props.post.id} onClick={() => this.handleGoToPagePostDetails(this.props.post.id)}>
-                        <Typography variant="h5" gutterBottom>
-                            {this.props.post.username}
-                        </Typography>
-                        <hr />
-                        <Typography>
-
-                            {this.props.post.text}
-
-                        </Typography>
-                        <hr />
-                        <Typography variant="body2" component="p">
-
-                        </Typography>
-                    </CardContent>
-                    <CardActions>
+    render(){
+        
+    return (
+        <ContainerPosts>
+            <Card>
+                <CardContent key={this.props.post.id} onClick={()=> this.handleGoToPagePostDetails(this.props.post.id)}>
+                    <Typography variant="h5" gutterBottom>
+                        {this.props.post.username}
+                    </Typography>
+                    <hr/>
+                    <Typography>
+                       {this.props.post.text}
+                    </Typography>
+                   <hr/>
+                </CardContent>
+                <CardActions>
                         <ContainerPostsCount>
                             <ArrowUp onClick={() => { this.props.postVote(+1, this.props.post.id) }}>⬆</ArrowUp>
                             <span>{this.props.post.userVoteDirection}</span>
@@ -76,17 +71,17 @@ class Posts extends React.Component {
                         <div>
                             <span>comentários</span>
                             <NumberOfComments>0</NumberOfComments>
-                        </div>
-                    </CardActions>
-                </Card>
-            </ContainerPosts>
-        )
-    }
+                        </div> 
+                </CardActions>
+            </Card>
+        </ContainerPosts>
+    )
+  }
 }
 
-const mapDispatchToProps = dispatch => ({
-    postVote: (direction, postId) => dispatch(postVote(direction, postId)),
-    goToPostDetails: () => dispatch(push(routes.post)),
+const mapDispatchToProps = dispatch =>({
+    postVote: (direction,postId) => dispatch(postVote(direction,postId)),
+    goToPostDetails: () =>  dispatch(push(routes.post)),
     setPostIdSelected: (postId) => dispatch(setPostIdSelected(postId))
 })
 
