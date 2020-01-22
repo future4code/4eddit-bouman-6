@@ -64,7 +64,7 @@ class PostDetails extends Component {
       }
 
       this.props.getPostDetail(this.props.postIdSelected)
-      console.log(this.props.getPostDetail(this.props.postIdSelected), "testando")
+      
    }
 
    render() {
@@ -77,7 +77,8 @@ class PostDetails extends Component {
 
             <StyledCardsContainer>
                <PostContainer>
-                  <p>{postDetail.username}</p>
+                  <p>{this.props.postDetail.username}</p>
+                  
 
                </PostContainer>
 
