@@ -128,9 +128,30 @@ export const createComment = (text, postId) => async (dispatch) => {
     }
 
     try {
-        const response = await axios.post(`${baseURL}/posts/${postId}/comment`, textInfo, axiosHeader)
-        dispatch(getPostDetail(postId))
+        await axios.post(`https://us-central1-missao-newton.cloudfunctions.net/fourEddit/posts/${postId}/comment`, textInfo, axiosHeader);
+       
+        dispatch(getPostDetail(postId));
     } catch(error) {
         window.alert("Erro ao tentar criar um comentário.")
     }
+}
+
+export const voteComment = (direction, postId, commentId) => async (dispatch) =>{
+    const token = window.localStorage.getItem("token");
+    const axiosHeader = {
+        headers: {
+            auth: token,
+        }
+    }
+
+    const dataVote = {
+        direction
+    }
+
+    try{
+        await axios.put(`${baseURL}/posts/${postId}/comment/${commentId}/vote`, dataVote, axiosHeader)
+        dispatch(getPostDetail(postId))
+    }catch(error){
+        window.alert("Erro ao tentar votar no comentário")
+    }   
 }
