@@ -52,10 +52,12 @@ const CommentsContainer = styled.div`
    width: 350px;  
    background: white;
 `
+
 const ContainerPostsCount = styled.div`
 margin-left:10px;
 margin-right:240px;
 `
+
 const ArrowUp = styled.span`
 cursor:pointer;
 font-size:17px;
@@ -69,6 +71,7 @@ font-size:17px;
 margin-left:2px;
 color:red;
 `
+
 const NumberOfComments = styled.span`
 margin-left:5px;
 `
@@ -87,7 +90,7 @@ class PostDetails extends Component {
    constructor(props) {
       super(props)
       this.state = {
-         comments: {},
+         comments: "",
       }
    }
 
@@ -111,45 +114,45 @@ class PostDetails extends Component {
       const { text } = this.state.comments;
       const { postIdSelected } = this.props
       this.props.createComment(text, postIdSelected)
-      this.setState({comments: {}})
+      this.setState({ comments: "" })
    }
 
    render() {
-      const { postDetails } = this.props
       return (
-         <StyledMainContainer>
-            <StyledImg src={Logo} alt="imagem da logo"/> 
+         <StyledMainContainer key="">
+            <StyledImg src={Logo} alt="imagem da logo" />
             <StyledTitle>Post Details</StyledTitle>
 
             <StyledCardsContainer>
                <Card>
                   <CardContent>
                      <Typography variant="h5" gutterBottom>
-                        <p>{this.props.postDetails.username}</p>
+                        <span>{this.props.postDetails.username}</span>
                      </Typography>
-                     <hr/>
+                     <hr />
                      <Typography>
-                        <p>{this.props.postDetails.text}</p>
+                        <span>{this.props.postDetails.text}</span>
                      </Typography>
-                        
+
                   </CardContent>
                   <CardActions>
                      <ContainerPostsCount>
-                        <ArrowUp onClick={() => {this.props.postVote(+1, this.props.post.id)}}>⬆</ArrowUp>
+                        <ArrowUp onClick={() => { this.props.postVote(+1, this.props.post.id) }}>⬆</ArrowUp>
                         <span>{this.props.postDetails.userVoteDirection}</span>
-                        <ArrowDown onClick={() => {this.props.postVote(-1, this.props.post.id)}}>⬇</ArrowDown>
+                        <ArrowDown onClick={() => { this.props.postVote(-1, this.props.post.id) }}>⬇</ArrowDown>
                      </ContainerPostsCount>
                      <div>
-                           <span>comentários</span>
-                           <NumberOfComments>{this.props.postDetails.commentsNumber}</NumberOfComments>
-                     </div> 
+                         <span>comentários</span>
+                         <NumberOfComments>{this.props.postDetails.commentsNumber}</NumberOfComments>
+                     </div>
                   </CardActions>
                </Card>
 
                <AddCommentContainer>
                   <form>
-                     {addComment.map(input => (
+                     {addComment.map((input, index) => (
                         <TextField
+                           key={index}
                            name={input.name}
                            value={this.state.comments[input.name] || ""}
                            id={input.name}
@@ -157,31 +160,29 @@ class PostDetails extends Component {
                            variant={input.variant}
                            type={input.type}
                            onChange={this.handleInputChanges}
-                           
                         />
                      ))}
                   </form>
-                  
-               <Button onClick={this.handleCreateComment} color="primary" variant="contained">Comentar</Button>
+
+                  <Button onClick={this.handleCreateComment} color="primary" variant="contained">Comentar</Button>
                </AddCommentContainer>
 
-              
-                  {this.props.postDetails.comments && this.props.postDetails.comments.map(comment =>(
-                      <CommentsContainer>
-                        <h3>{comment.username}</h3>
-                        <p>{comment.text}</p>
-                        <p>{comment.votesCount}</p>
+               {this.props.postDetails.comments && this.props.postDetails.comments.map((comment, index) => (
+                  <CommentsContainer key={index}>
+                     <h3>{comment.username}</h3>
+                     <p>{comment.text}</p>
+                     <p>{comment.votesCount}</p>                 
                         
-                        <ArrowUp onClick={() => this.props.voteComment(+1, 
-                           this.props.postIdSelected, 
-                           comment.id)}>⬆ </ArrowUp>
+                      <ArrowUp onClick={() => this.props.voteComment(+1, 
+                        this.props.postIdSelected, 
+                        comment.id)}>⬆ </ArrowUp>
 
-                        <ArrowDown onClick={() => this.props.voteComment(-1, 
-                           this.props.postIdSelected, 
-                           comment.id)}>⬇</ArrowDown>
-                        
-                     </CommentsContainer>
-                  ))}
+                      <ArrowDown onClick={() => this.props.voteComment(-1, 
+                        this.props.postIdSelected, 
+                        comment.id)}>⬇</ArrowDown>
+
+                 </CommentsContainer>
+               ))}
                
             </StyledCardsContainer>
 
@@ -203,8 +204,8 @@ function mapDispatchToProps(dispatch) {
    return {
       goToLoginPage: () => dispatch(push(routes.root)),
       gotToFeedPage: () => dispatch(push(routes.feed)),
-      getPostDetail: (postId) => dispatch(getPostDetail(postId)), 
-      postVote: (direction,postId) => dispatch(postVote(direction,postId)),
+      getPostDetail: (postId) => dispatch(getPostDetail(postId)),
+      postVote: (direction, postId) => dispatch(postVote(direction, postId)),
       createComment: (text, postId) => dispatch(createComment(text, postId)),
       voteComment: (direction, postId, commentId) => dispatch(voteComment(direction, postId, commentId))
    }

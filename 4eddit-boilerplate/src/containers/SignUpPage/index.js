@@ -73,8 +73,9 @@ class SignUpPage extends Component {
       <MainContainer>
         <StyledImg src={Logo} alt="imagem da logo" />
         <FormContainer onSubmit={this.handleInputChanges}>
-          {signUpForm.map(input => (
+          {signUpForm.map((input, index) => (
             <StyledTextField
+              key={index}
               name={input.name}
               value={this.state.form[input.name] || ""}
               id={input.name}

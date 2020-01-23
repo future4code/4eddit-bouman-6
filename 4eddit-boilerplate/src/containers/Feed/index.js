@@ -79,7 +79,7 @@ class Feed extends Component {
                 <TitleFeed>Feed</TitleFeed>
                 <div>
                     <form onSubmit={this.sendPostData}>
-                        {formFeed.map(input => (
+                        {formFeed.map(input=> (
                             <div key={input.name}>
                                 <TextField
                                     onChange={this.handleFieldChange}
@@ -94,8 +94,8 @@ class Feed extends Component {
                             <Button onClick={this.sendNewPost} color="primary" variant="contained">Postar</Button>
                         </ContainerButton>
                     </form>
-                    {this.props.getToPosts.map(post => (
-                        <Posts post={post} onClick={this.props.onClick}></Posts>
+                    {this.props.getToPosts.map((post, index) => (
+                        <Posts key={index} post={post} onClick={this.props.onClick}></Posts>
                     ))}
                 </div>
             </Container>
