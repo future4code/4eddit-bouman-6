@@ -20,10 +20,6 @@ const Container = styled.form`
   display: grid;
 `
 
-const P = styled.p`
-font-size:12px;
-`
-
 class LoginPage extends Component {
   constructor(props) {
     super(props);

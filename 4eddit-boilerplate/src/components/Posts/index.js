@@ -37,10 +37,7 @@ margin-left:2px;
 color:red;
 `
 class Posts extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
+    
     handleGoToPagePostDetails = (postId) => {
         this.props.setPostIdSelected(postId)
         this.props.goToPostDetails()

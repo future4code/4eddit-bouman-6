@@ -44,7 +44,7 @@ export const createPost = (text, title) => async (dispatch) => {
     }
 
     try {
-        const response = await axios.post(`${baseURL}/posts`, postInformation, axiosHeader)
+        await axios.post(`${baseURL}/posts`, postInformation, axiosHeader)
         dispatch(getPosts())
     } catch (erros) {
         window.alert("Erro ao criar post")
@@ -92,7 +92,7 @@ export const postVote = (direction, postId) => async (dispatch) => {
     }
 
     try {
-        const response = await axios.put(
+        await axios.put(
             `${baseURL}/posts/${postId}/vote`,
             informationVote,
             axiosHeader,
@@ -128,7 +128,7 @@ export const createComment = (text, postId) => async (dispatch) => {
     }
 
     try {
-        const response = await axios.post(`${baseURL}/posts/${postId}/comment`, textInfo, axiosHeader)
+        await axios.post(`${baseURL}/posts/${postId}/comment`, textInfo, axiosHeader)
         dispatch(getPostDetail(postId))
     } catch(error) {
         window.alert("Erro ao tentar criar um comentário.")
