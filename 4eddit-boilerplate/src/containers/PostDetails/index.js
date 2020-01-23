@@ -10,7 +10,7 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import styled from 'styled-components';
-import { getPostDetail, postVote, createComment } from '../../actions/posts'
+import { getPostDetail, postVote, createComment, voteComment } from '../../actions/posts'
 
 const StyledMainContainer = styled.div`
    width:30%;
@@ -142,8 +142,8 @@ class PostDetails extends Component {
                         <ArrowDown onClick={() => { this.props.postVote(-1, this.props.post.id) }}>⬇</ArrowDown>
                      </ContainerPostsCount>
                      <div>
-                        <span>comentários</span>
-                        <NumberOfComments>0</NumberOfComments>
+                         <span>comentários</span>
+                         <NumberOfComments>{this.props.postDetails.commentsNumber}</NumberOfComments>
                      </div>
                   </CardActions>
                </Card>
@@ -167,15 +167,23 @@ class PostDetails extends Component {
                   <Button onClick={this.handleCreateComment} color="primary" variant="contained">Comentar</Button>
                </AddCommentContainer>
 
-
                {this.props.postDetails.comments && this.props.postDetails.comments.map((comment, index) => (
                   <CommentsContainer key={index}>
                      <h3>{comment.username}</h3>
                      <p>{comment.text}</p>
-                     <p>{comment.votesCount}</p>
-                  </CommentsContainer>
-               ))}
+                     <p>{comment.votesCount}</p>                 
+                        
+                      <ArrowUp onClick={() => this.props.voteComment(+1, 
+                        this.props.postIdSelected, 
+                        comment.id)}>⬆ </ArrowUp>
 
+                      <ArrowDown onClick={() => this.props.voteComment(-1, 
+                        this.props.postIdSelected, 
+                        comment.id)}>⬇</ArrowDown>
+
+                 </CommentsContainer>
+               ))}
+               
             </StyledCardsContainer>
 
             <Button onClick={this.props.gotToFeedPage} color="primary" variant="contained">Voltar</Button>
@@ -199,6 +207,7 @@ function mapDispatchToProps(dispatch) {
       getPostDetail: (postId) => dispatch(getPostDetail(postId)),
       postVote: (direction, postId) => dispatch(postVote(direction, postId)),
       createComment: (text, postId) => dispatch(createComment(text, postId)),
+      voteComment: (direction, postId, commentId) => dispatch(voteComment(direction, postId, commentId))
    }
 }
 

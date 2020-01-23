@@ -67,7 +67,7 @@ class Posts extends React.Component {
                         </ContainerPostsCount>
                         <div>
                             <span>comentários</span>
-                            <NumberOfComments>0</NumberOfComments>
+                            <NumberOfComments>{this.props.post.commentsNumber}</NumberOfComments>
                         </div> 
                 </CardActions>
             </Card>

@@ -134,3 +134,23 @@ export const createComment = (text, postId) => async (dispatch) => {
         window.alert("Erro ao tentar criar um comentário.")
     }
 }
+
+export const voteComment = (direction, postId, commentId) => async (dispatch) =>{
+    const token = window.localStorage.getItem("token");
+    const axiosHeader = {
+        headers: {
+            auth: token,
+        }
+    }
+
+    const dataVote = {
+        direction
+    }
+
+    try{
+        await axios.put(`${baseURL}/posts/${postId}/comment/${commentId}/vote`, dataVote, axiosHeader)
+        dispatch(getPostDetail(postId))
+    }catch(error){
+        window.alert("Erro ao tentar votar no comentário")
+    }   
+}
