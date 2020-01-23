@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 import { routes } from '../Router'
+import TextField from '@material-ui/core/TextField';
 import Logo from '../../4eddit.png';
 import Button from '@material-ui/core/Button'
 import Card from '@material-ui/core/Card';
@@ -9,7 +10,7 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import styled from 'styled-components';
-import { getPostDetail, postVote } from '../../actions/posts'
+import { getPostDetail, postVote, createComment } from '../../actions/posts'
 
 const StyledMainContainer = styled.div`
    width:30%;
@@ -23,8 +24,8 @@ const StyledImg = styled.img`
 `
 
 const StyledTitle = styled.h1`
-   color: white;
-   text-shadow: 1px 1px black;
+   color: black;
+   text-shadow: 1px 1px white;
 `
 
 const StyledCardsContainer = styled.div`
@@ -46,9 +47,9 @@ const AddCommentContainer = styled.div`
 const CommentsContainer = styled.div`
    margin: 15px 300px;
    text-align: center;
-   border: 1px solid black;
+   box-shadow:1px 7px 7px #C0C0C0;
    padding: 20px;
-   width: 500px;  
+   width: 350px;  
    background: white;
 `
 const ContainerPostsCount = styled.div`
@@ -105,9 +106,12 @@ class PostDetails extends Component {
       this.setState({ comments: { ...this.state.comments, [name]: value } });
    };
 
-   handleCreateComment = () => {
-      const { postId, text } = this.state.comments;
-      this.props.createComment(postId, text)
+   handleCreateComment = (event) => {
+      event.preventDefault()
+      const { text } = this.state.comments;
+      const { postIdSelected } = this.props
+      this.props.createComment(text, postIdSelected)
+      this.setState({comments: {}})
    }
 
    render() {
@@ -121,18 +125,18 @@ class PostDetails extends Component {
                <Card>
                   <CardContent>
                      <Typography variant="h5" gutterBottom>
-                        <p>{this.props.postDetail.username}</p>
+                        <p>{this.props.postDetails.username}</p>
                      </Typography>
                      <hr/>
                      <Typography>
-                        <p>{this.props.postDetail.text}</p>
+                        <p>{this.props.postDetails.text}</p>
                      </Typography>
                         
                   </CardContent>
                   <CardActions>
                      <ContainerPostsCount>
                         <ArrowUp onClick={() => {this.props.postVote(+1, this.props.post.id)}}>⬆</ArrowUp>
-                        <span>{this.props.postDetail.userVoteDirection}</span>
+                        <span>{this.props.postDetails.userVoteDirection}</span>
                         <ArrowDown onClick={() => {this.props.postVote(-1, this.props.post.id)}}>⬇</ArrowDown>
                      </ContainerPostsCount>
                      <div>
@@ -143,7 +147,7 @@ class PostDetails extends Component {
                </Card>
 
                <AddCommentContainer>
-                  <form onSubmit={this.handleInputChanges}>
+                  <form>
                      {addComment.map(input => (
                         <TextField
                            name={input.name}
@@ -153,16 +157,23 @@ class PostDetails extends Component {
                            variant={input.variant}
                            type={input.type}
                            onChange={this.handleInputChanges}
-                           multiline
+                           
                         />
                      ))}
                   </form>
-                  <Button onClick={this.handleCreateComment} color="primary" variant="contained">Comentar</Button>
+                  
+               <Button onClick={this.handleCreateComment} color="primary" variant="contained">Comentar</Button>
                </AddCommentContainer>
 
-               <CommentsContainer>
-                  <p>Lista de comentários no post selecionado</p>
-               </CommentsContainer>
+              
+                  {this.props.postDetails.comments && this.props.postDetails.comments.map(comment =>(
+                      <CommentsContainer>
+                        <h3>{comment.username}</h3>
+                        <p>{comment.text}</p>
+                        <p>{comment.votesCount}</p>
+                     </CommentsContainer>
+                  ))}
+               
             </StyledCardsContainer>
 
             <Button onClick={this.props.gotToFeedPage} color="primary" variant="contained">Voltar</Button>
@@ -185,7 +196,7 @@ function mapDispatchToProps(dispatch) {
       gotToFeedPage: () => dispatch(push(routes.feed)),
       getPostDetail: (postId) => dispatch(getPostDetail(postId)), 
       postVote: (direction,postId) => dispatch(postVote(direction,postId)),
-      //createComment: (postId, text) => dispatch(createComment(postId, text)),
+      createComment: (text, postId) => dispatch(createComment(text, postId)),
    }
 }
 

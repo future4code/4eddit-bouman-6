@@ -44,7 +44,7 @@ class Posts extends React.Component {
     handleGoToPagePostDetails = (postId) => {
         this.props.setPostIdSelected(postId)
         this.props.goToPostDetails()
-        console.log("testando post id: ", this.props.post.id)
+       
     }
 
     render(){

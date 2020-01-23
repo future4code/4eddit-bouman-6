@@ -115,7 +115,7 @@ export const setPostIdSelected = (postIdSelected) => ({
 
 // CRIAR E ADICIONAR COMENTÁRIOS NO POST SELECIONADO
 
-export const createComment = (postId, text) => async (dispatch) => {
+export const createComment = (text, postId) => async (dispatch) => {
     const token = window.localStorage.getItem("token");
     const axiosHeader = {
         headers: {
