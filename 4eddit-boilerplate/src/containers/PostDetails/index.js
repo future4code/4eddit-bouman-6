@@ -10,7 +10,7 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import styled from 'styled-components';
-import { getPostDetail, postVote, createComment } from '../../actions/posts'
+import { getPostDetail, postVote, createComment, voteComment } from '../../actions/posts'
 
 const StyledMainContainer = styled.div`
    width:30%;
@@ -75,7 +75,7 @@ margin-left:5px;
 
 const addComment = [
    {
-      name: "comentario",
+      name: "text",
       type: "text",
       label: "Escreva seu comentário",
       required: true,
@@ -141,7 +141,7 @@ class PostDetails extends Component {
                      </ContainerPostsCount>
                      <div>
                            <span>comentários</span>
-                           <NumberOfComments>0</NumberOfComments>
+                           <NumberOfComments>{this.props.postDetails.commentsNumber}</NumberOfComments>
                      </div> 
                   </CardActions>
                </Card>
@@ -171,6 +171,15 @@ class PostDetails extends Component {
                         <h3>{comment.username}</h3>
                         <p>{comment.text}</p>
                         <p>{comment.votesCount}</p>
+                        
+                        <ArrowUp onClick={() => this.props.voteComment(+1, 
+                           this.props.postIdSelected, 
+                           comment.id)}>⬆ </ArrowUp>
+
+                        <ArrowDown onClick={() => this.props.voteComment(-1, 
+                           this.props.postIdSelected, 
+                           comment.id)}>⬇</ArrowDown>
+                        
                      </CommentsContainer>
                   ))}
                
@@ -197,6 +206,7 @@ function mapDispatchToProps(dispatch) {
       getPostDetail: (postId) => dispatch(getPostDetail(postId)), 
       postVote: (direction,postId) => dispatch(postVote(direction,postId)),
       createComment: (text, postId) => dispatch(createComment(text, postId)),
+      voteComment: (direction, postId, commentId) => dispatch(voteComment(direction, postId, commentId))
    }
 }
 
