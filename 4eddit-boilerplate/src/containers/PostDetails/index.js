@@ -45,7 +45,7 @@ const AddCommentContainer = styled.div`
 const CommentsContainer = styled.div`
    margin: 15px 300px;
    text-align: center;
-   box-shadow: 4px 4px 4px rgba(220,220,220,0.3);
+   box-shadow: 3px 3px 0px rgba(0,0,0,0.3);
    padding: 20px;
    width: 350px;  
    background: white;
