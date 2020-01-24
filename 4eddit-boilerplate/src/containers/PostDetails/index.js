@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
-import { routes } from '../Router'
+import { routes } from '../Router';
 import TextField from '@material-ui/core/TextField';
 import Logo from '../../4eddit.png';
 import Button from '@material-ui/core/Button'
@@ -10,7 +10,9 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import styled from 'styled-components';
-import { getPostDetail, postVote, createComment, voteComment } from '../../actions/posts'
+import Fab from '@material-ui/core/Fab';
+import { getPostDetail, postVote, createComment, voteComment } from '../../actions/posts';
+import { dark } from "@material-ui/core/styles/createPalette";
 
 const StyledMainContainer = styled.div`
    width:30%;
@@ -19,13 +21,14 @@ const StyledMainContainer = styled.div`
 `
 
 const StyledImg = styled.img`
-   max-width: 25%;
+   max-width: 20vw;
    height: auto;
 `
 
 const StyledTitle = styled.h1`
-   color: black;
-   
+   color: white;
+   text-shadow: 1px 1px black;
+
 `
 
 const StyledCardsContainer = styled.div`
@@ -35,47 +38,79 @@ const StyledCardsContainer = styled.div`
 `
 
 const AddCommentContainer = styled.div`
-   margin: 10px 300px;
-   text-align: center;
+   width: 330px;
+   margin: 15px;
    padding: 20px;
-   width: 500px;  
-   justify-self: center;
+`
+
+const StyledInputComment = styled(TextField)`
+   :focus {
+      color: black;
+   }
 `
 
 const CommentsContainer = styled.div`
    margin: 15px 300px;
    text-align: center;
-   box-shadow: 4px 4px 4px rgba(220,220,220,0.3);
+   box-shadow: 3px 3px 0px rgba(0,0,0,0.3);
    padding: 20px;
    width: 350px;  
    background: white;
+   border-radius: 5px;
 `
 
 const ContainerPostsCount = styled.div`
-margin-left:10px;
-margin-right:240px;
+   margin-left:10px;
+   margin-right:240px;
 `
 
 const ArrowUp = styled.span`
-cursor:pointer;
-font-size:17px;
-margin-right:2px;
-color:green;
+   cursor:pointer;
+   font-size:17px;
+   margin-right:2px;
+   color:green;
 `
 
 const ArrowDown = styled.span`
-cursor:pointer;
-font-size:17px;
-margin-left:2px;
-color:red;
+   cursor:pointer;
+   font-size:17px;
+   margin-left:2px;
+   color:red;
 `
 
 const NumberOfComments = styled.span`
-margin-left:5px;
+   margin-left:5px;
 `
 
 const ContainerButtonBack = styled.div`
-margin: 50px 0px;
+   margin: 50px 0px;
+`
+
+const StyledButton = styled(Button)`
+   background: #ffb08f;
+   text-shadow: 1px 1px black;
+   font-weight: bold;
+   color: white;
+   :hover {
+      background: #c75839;
+   }
+`
+
+const StyledCard = styled(Card)`
+   margin-top: 15px;
+`
+
+const StyledBackButton = styled(Fab)`
+   position: fixed;
+   bottom: 300px;
+   right: 20px;
+   background: #ffb08f;
+   text-shadow: 1px 1px black;
+   font-weight: bold;
+   color: white;
+   :hover {
+      background: #c75839;
+   }
 `
 
 const addComment = [
@@ -85,6 +120,7 @@ const addComment = [
       label: "Escreva seu comentário",
       required: true,
       variant: "outlined",
+      color: "secondary",
    },
 ]
 
@@ -124,13 +160,18 @@ class PostDetails extends Component {
       return (
          <StyledMainContainer key="">
             <StyledImg src={Logo} alt="imagem da logo" />
-            <StyledTitle>Post Details</StyledTitle>
-               
+            <StyledTitle>Detalhes do Post</StyledTitle>
+
             <ContainerButtonBack>
-               <Button onClick={this.props.gotToFeedPage} color="primary" variant="contained">Voltar para o feed</Button>
-            </ContainerButtonBack>   
-              
-               
+               <StyledBackButton
+                  onClick={this.props.gotToFeedPage}
+                  color="primary"
+                  variant="contained">
+                  Voltar
+               </StyledBackButton>
+            </ContainerButtonBack>
+
+
             <StyledCardsContainer>
                <Card>
                   <CardContent>
@@ -150,54 +191,60 @@ class PostDetails extends Component {
                         <ArrowDown onClick={() => { this.props.postVote(-1, this.props.postDetails.id) }}>⬇</ArrowDown>
                      </ContainerPostsCount>
                      <div>
-                         <span>comentários</span>
-                         <NumberOfComments>{this.props.postDetails.commentsNumber}</NumberOfComments>
+                        <span>comentários</span>
+                        <NumberOfComments>{this.props.postDetails.commentsNumber}</NumberOfComments>
                      </div>
                   </CardActions>
                </Card>
 
-               <AddCommentContainer>
-                  <form>
-                     {addComment.map((input, index) => (
-                        <TextField
-                           key={index}
-                           name={input.name}
-                           value={this.state.comments[input.name] || ""}
-                           id={input.name}
-                           label={input.label}
-                           variant={input.variant}
-                           type={input.type}
-                           onChange={this.handleInputChanges}
-                        />
-                     ))}
-                  </form>
-                  </AddCommentContainer>     
-                  <Button onClick={this.handleCreateComment} color="primary" variant="contained">Comentar</Button>
-               
+               <StyledCard>
+                  <CardContent>
+                     <AddCommentContainer>
+                        <form>
+                           {addComment.map((input, index) => (
+                              <StyledInputComment
+                                 key={index}
+                                 name={input.name}
+                                 value={this.state.comments[input.name] || ""}
+                                 id={input.name}
+                                 label={input.label}
+                                 variant={input.variant}
+                                 type={input.type}
+                                 onChange={this.handleInputChanges}
+                                 multiline
+                                 color={input.color}
+                              />
+                           ))}
+                        </form>
+                     </AddCommentContainer>
+                     <StyledButton
+                        onClick={this.handleCreateComment}
+                        color="secondary"
+                        variant="contained">
+                        Comentar
+                     </StyledButton>
+                  </CardContent>
+               </StyledCard>
 
-
-               <StyledTitle>Comentários</StyledTitle>   
+               <StyledTitle>Comentários</StyledTitle>
                {this.props.postDetails.comments && this.props.postDetails.comments.map((comment, index) => (
                   <CommentsContainer key={index}>
                      <h3>{comment.username}</h3>
                      <p>{comment.text}</p>
-                     <p>{comment.votesCount}</p>                 
-                        
-                      <ArrowUp onClick={() => this.props.voteComment(+1, 
-                        this.props.postIdSelected, 
+                     <p>{comment.votesCount}</p>
+
+                     <ArrowUp onClick={() => this.props.voteComment(+1,
+                        this.props.postIdSelected,
                         comment.id)}>⬆ </ArrowUp>
 
-                      <ArrowDown onClick={() => this.props.voteComment(-1, 
-                        this.props.postIdSelected, 
+                     <ArrowDown onClick={() => this.props.voteComment(-1,
+                        this.props.postIdSelected,
                         comment.id)}>⬇</ArrowDown>
 
-                 </CommentsContainer>
+                  </CommentsContainer>
                ))}
-               
+
             </StyledCardsContainer>
-
-            
-
          </StyledMainContainer>
       );
    }

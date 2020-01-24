@@ -120,7 +120,7 @@ export const createComment = (text, postId) => async (dispatch) => {
     const axiosHeader = {
         headers: {
             auth: token,
-        }        
+        }
     }
 
     const textInfo = {
@@ -130,14 +130,14 @@ export const createComment = (text, postId) => async (dispatch) => {
     try {
         await axios.post(`${baseURL}/posts/${postId}/comment`, textInfo, axiosHeader)
         dispatch(getPostDetail(postId))
-    } catch(error) {
+    } catch (error) {
         window.alert("Erro ao tentar criar um comentário.")
     }
 }
 
 //Votar em um comentário no post selecionado.
 
-export const voteComment = (direction, postId, commentId) => async (dispatch) =>{
+export const voteComment = (direction, postId, commentId) => async (dispatch) => {
     const token = window.localStorage.getItem("token");
     const axiosHeader = {
         headers: {
@@ -149,10 +149,10 @@ export const voteComment = (direction, postId, commentId) => async (dispatch) =>
         direction
     }
 
-    try{
+    try {
         await axios.put(`${baseURL}/posts/${postId}/comment/${commentId}/vote`, dataVote, axiosHeader)
         dispatch(getPostDetail(postId))
-    }catch(error){
+    } catch (error) {
         window.alert("Erro ao tentar votar no comentário")
-    }   
+    }
 }
