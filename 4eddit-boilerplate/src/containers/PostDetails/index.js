@@ -35,12 +35,10 @@ const StyledCardsContainer = styled.div`
 `
 
 const AddCommentContainer = styled.div`
-   margin: 15px 300px;
+   margin: 10px 300px;
    text-align: center;
-   border: 1px solid black;
    padding: 20px;
    width: 500px;  
-   background: white;
    justify-self: center;
 `
 
@@ -118,11 +116,12 @@ class PostDetails extends Component {
    }
 
    render() {
+      const { postDetails } = this.props
       return (
          <StyledMainContainer key="">
             <StyledImg src={Logo} alt="imagem da logo"/>
             <StyledTitle>Post Details</StyledTitle>
-
+               <Button onClick={this.props.gotToFeedPage} color="primary" variant="contained">Voltar para o feed</Button>
             <StyledCardsContainer>
                <Card>
                   <CardContent>
@@ -163,10 +162,12 @@ class PostDetails extends Component {
                         />
                      ))}
                   </form>
-
+                  </AddCommentContainer>     
                   <Button onClick={this.handleCreateComment} color="primary" variant="contained">Comentar</Button>
-               </AddCommentContainer>
+               
 
+
+               <StyledTitle>Comentários</StyledTitle>   
                {this.props.postDetails.comments && this.props.postDetails.comments.map((comment, index) => (
                   <CommentsContainer key={index}>
                      <h3>{comment.username}</h3>
@@ -186,7 +187,7 @@ class PostDetails extends Component {
                
             </StyledCardsContainer>
 
-            <Button onClick={this.props.gotToFeedPage} color="primary" variant="contained">Voltar</Button>
+            
 
          </StyledMainContainer>
       );
