@@ -12,12 +12,12 @@ import { getPosts, createPost } from "../../actions/posts";
 const StyledImg = styled.img`
    max-width: 15%;
    height: auto;
+   margin-bottom:50px;
 `
 
 const Container = styled.div`
     margin:auto;
     text-align:center;
-    width:80%;
 `
 
 const TitleFeed = styled.h1`
@@ -76,7 +76,7 @@ class Feed extends Component {
         return (
             <Container>
                 <StyledImg src={Logo} alt="imagem da logo" />
-                <TitleFeed>Feed</TitleFeed>
+                <h2>Crie um novo Post</h2>
                 <div>
                     <form onSubmit={this.sendPostData}>
                         {formFeed.map(input=> (
@@ -94,6 +94,7 @@ class Feed extends Component {
                             <Button onClick={this.sendNewPost} color="primary" variant="contained">Postar</Button>
                         </ContainerButton>
                     </form>
+                    <TitleFeed>Feed</TitleFeed>
                     {this.props.getToPosts.map((post, index) => (
                         <Posts key={index} post={post} onClick={this.props.onClick}></Posts>
                     ))}
