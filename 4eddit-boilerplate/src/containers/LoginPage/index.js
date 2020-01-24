@@ -13,7 +13,7 @@ const HeaderContainer = styled.div`
   color: white;
   text-shadow: 1px 1px black;
   font-size: 12pt;
-  border-bottom: 30px solid #ffb08f;
+  
 `
 
 const StyledImg = styled.img`
@@ -38,7 +38,7 @@ const StyledButton = styled(Button)`
   margin: 30px 15px 0px 15px;
   padding: 10px;
   font-weight: bold;
-  text-shadow: 1px 1px black;
+  
 `
 
 const StyledFooter = styled.div`
@@ -69,13 +69,15 @@ class LoginPage extends Component {
   render() {
     const { email, password } = this.state;
     return (
-      <main>
+      <div>
         <HeaderContainer>
-          <StyledImg src={Logo} alt="imagem da logo"/> 
-          <h1>Login</h1>         
+          <StyledImg src={Logo} alt="imagem da logo"/>  
         </HeaderContainer>
         
-        <StyledInputContainer>          
+         
+
+        <StyledInputContainer> 
+          <h1>Login</h1>           
           <StyledTextField
             onChange={this.handleFieldChange}
             name="email"
@@ -83,6 +85,7 @@ class LoginPage extends Component {
             label="E-mail"
             value={email}
             variant="outlined"
+            color="secondary"
           />
 
           <StyledTextField
@@ -92,11 +95,12 @@ class LoginPage extends Component {
             label="Password"
             value={password}
             variant="outlined"
+            color="secondary"
           />
 
           <div>
-            <StyledButton onClick={this.handleLoginButton} color="primary" variant="contained">Entrar</StyledButton>
-            <StyledButton onClick={this.props.goToRegister} color="primary" variant="contained">Cadastrar</StyledButton>
+            <StyledButton onClick={this.handleLoginButton} color="secondary" variant="contained">Entrar</StyledButton>
+            <StyledButton onClick={this.props.goToRegister} color="secondary" variant="contained">Cadastrar</StyledButton>
           </div>
           
         </StyledInputContainer>
@@ -104,7 +108,7 @@ class LoginPage extends Component {
         <StyledFooter>
           div vazia
         </StyledFooter>
-      </main>
+      </div>
     );
   }
 }

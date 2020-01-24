@@ -1,8 +1,13 @@
 import { createMuiTheme } from "@material-ui/core";
-import brown from "@material-ui/core/colors/brown";
+import red from "@material-ui/core/colors/red";
 
 export default createMuiTheme({
   palette: {
-    primary: brown,
+    primary:{
+        main:'#fff',
+    },
+    secondary: {
+        main: '#ed7f61',
+    }
   }
 });

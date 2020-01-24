@@ -19,13 +19,13 @@ const StyledMainContainer = styled.div`
 `
 
 const StyledImg = styled.img`
-   width: 15vw;
+   max-width: 25%;
    height: auto;
 `
 
 const StyledTitle = styled.h1`
    color: black;
-   text-shadow: 1px 1px white;
+   
 `
 
 const StyledCardsContainer = styled.div`
@@ -45,7 +45,7 @@ const AddCommentContainer = styled.div`
 const CommentsContainer = styled.div`
    margin: 15px 300px;
    text-align: center;
-   box-shadow:1px 7px 7px #C0C0C0;
+   box-shadow: 4px 4px 4px rgba(220,220,220,0.3);
    padding: 20px;
    width: 350px;  
    background: white;
@@ -72,6 +72,10 @@ color:red;
 
 const NumberOfComments = styled.span`
 margin-left:5px;
+`
+
+const ContainerButtonBack = styled.div`
+margin: 50px 0px;
 `
 
 const addComment = [
@@ -119,9 +123,14 @@ class PostDetails extends Component {
       const { postDetails } = this.props
       return (
          <StyledMainContainer key="">
-            <StyledImg src={Logo} alt="imagem da logo"/>
+            <StyledImg src={Logo} alt="imagem da logo" />
             <StyledTitle>Post Details</StyledTitle>
+               
+            <ContainerButtonBack>
                <Button onClick={this.props.gotToFeedPage} color="primary" variant="contained">Voltar para o feed</Button>
+            </ContainerButtonBack>   
+              
+               
             <StyledCardsContainer>
                <Card>
                   <CardContent>
