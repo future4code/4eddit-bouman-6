@@ -1,10 +1,12 @@
 import React, { Component } from "react";
 import TextField from '@material-ui/core/TextField';
 import { connect } from "react-redux";
+import { routes } from '../Router/';
+import { push } from 'connected-react-router';
 import Button from '@material-ui/core/Button';
 import Logo from '../../4eddit.png';
 import styled from 'styled-components';
-import { createUser } from "../../actions/signUp"
+import { createUser } from "../../actions/signUp";
 
 const MainContainer = styled.div`
   text-align: center;
@@ -85,8 +87,9 @@ class SignUpPage extends Component {
               type={input.type}
             />
           ))}
-          <Button onClick={this.handleCreateUser} variant="contained" color="primary">Cadastrar</Button>
+          <Button onClick={this.handleCreateUser} variant="contained" color="primary">Cadastrar</Button>          
         </FormContainer>
+        <Button onClick={this.props.goToLoginPage} color="primary" variant="contained">Voltar</Button>
       </MainContainer>
     );
   }
@@ -95,6 +98,7 @@ class SignUpPage extends Component {
 function mapDispatchToProps(dispatch) {
   return {
     createUser: (email, password, username) => dispatch(createUser(email, password, username)),
+    goToLoginPage: () => dispatch(push(routes.root))
   }
 }
 

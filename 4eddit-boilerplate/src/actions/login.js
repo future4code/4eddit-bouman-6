@@ -2,6 +2,10 @@ import axios from 'axios';
 import { push } from "connected-react-router";
 import { routes } from "../containers/Router";
 
+const baseURL = "https://us-central1-missao-newton.cloudfunctions.net/fourEddit"
+
+// Faz o login de um usuário já cadastrado.
+
 export const login = (email, password) => async (dispatch) => {
     const loginInformation = {
         email,
@@ -9,7 +13,7 @@ export const login = (email, password) => async (dispatch) => {
     }
 
     try {
-        const response = await axios.post("https://us-central1-missao-newton.cloudfunctions.net/fourEddit/login", loginInformation);
+        const response = await axios.post(`${baseURL}/login`, loginInformation);
         window.localStorage.setItem("token", response.data.token);
 
         dispatch(push(routes.feed))

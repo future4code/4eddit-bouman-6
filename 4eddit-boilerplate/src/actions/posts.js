@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const baseURL = "https://us-central1-missao-newton.cloudfunctions.net/fourEddit"
 
-// COLOCA UM NOVO POST NO FEED
+// Coloca um novo post no na lista de Feed
 
 export const setPosts = (allPosts) => ({
     type: "SET_POSTS",
@@ -28,7 +28,7 @@ export const getPosts = () => async (dispatch) => {
     }
 }
 
-// CRIA UM NOVO POSTS NA PÁGINA DE FEEDS
+// Criar um novo post na página de Feeds.
 
 export const createPost = (text, title) => async (dispatch) => {
     const token = window.localStorage.getItem("token");
@@ -51,7 +51,7 @@ export const createPost = (text, title) => async (dispatch) => {
     }
 }
 
-//PEGAR O POST CLICADO E ENVIAR PARA PÁGINA DE DETALHES
+// Pegar o post clicado
 
 export const getPostDetailAction = (post) => ({
     type: "SET_POST_DETAIL",
@@ -77,7 +77,7 @@ export const getPostDetail = (postId) => async (dispatch) => {
     }
 }
 
-// ADICIONA LIKE OU DISLIKE EM UM POST
+// Adiciona like ou dislike em um post.
 
 export const postVote = (direction, postId) => async (dispatch) => {
     const token = window.localStorage.getItem("token");
@@ -104,7 +104,7 @@ export const postVote = (direction, postId) => async (dispatch) => {
     }
 }
 
-//
+// Pega o Id do post selecionado.
 
 export const setPostIdSelected = (postIdSelected) => ({
     type: 'SET_POST_ID',
@@ -113,7 +113,7 @@ export const setPostIdSelected = (postIdSelected) => ({
     }
 })
 
-// CRIAR E ADICIONAR COMENTÁRIOS NO POST SELECIONADO
+// Criar e adicionar um comentário no post selecionado.
 
 export const createComment = (text, postId) => async (dispatch) => {
     const token = window.localStorage.getItem("token");
@@ -134,6 +134,8 @@ export const createComment = (text, postId) => async (dispatch) => {
         window.alert("Erro ao tentar criar um comentário.")
     }
 }
+
+//Votar em um comentário no post selecionado.
 
 export const voteComment = (direction, postId, commentId) => async (dispatch) =>{
     const token = window.localStorage.getItem("token");
