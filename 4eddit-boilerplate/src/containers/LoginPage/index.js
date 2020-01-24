@@ -12,8 +12,7 @@ const HeaderContainer = styled.div`
   text-align: center;
   color: white;
   text-shadow: 1px 1px black;
-  font-size: 12pt;
-  
+  font-size: 12pt;  
 `
 
 const StyledImg = styled.img`
@@ -41,7 +40,7 @@ const StyledButton = styled(Button)`
   
 `
 
-const StyledFooter = styled.div`
+const StyledDiv = styled.div`
   padding: 5px 0;
   background: #ffb08f;
   color: transparent;
@@ -71,13 +70,12 @@ class LoginPage extends Component {
     return (
       <div>
         <HeaderContainer>
-          <StyledImg src={Logo} alt="imagem da logo"/>  
+          <StyledImg src={Logo} alt="imagem da logo" />
         </HeaderContainer>
-        
-         
+        <StyledDiv>div faixa</StyledDiv>
 
-        <StyledInputContainer> 
-          <h1>Login</h1>           
+        <StyledInputContainer>
+          <h1>Login</h1>
           <StyledTextField
             onChange={this.handleFieldChange}
             name="email"
@@ -102,12 +100,10 @@ class LoginPage extends Component {
             <StyledButton onClick={this.handleLoginButton} color="secondary" variant="contained">Entrar</StyledButton>
             <StyledButton onClick={this.props.goToRegister} color="secondary" variant="contained">Cadastrar</StyledButton>
           </div>
-          
+
         </StyledInputContainer>
 
-        <StyledFooter>
-          div vazia
-        </StyledFooter>
+        <StyledDiv>div faixa</StyledDiv>
       </div>
     );
   }

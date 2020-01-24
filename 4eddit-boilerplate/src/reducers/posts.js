@@ -17,7 +17,7 @@ const postsReducer = (state = initialState, action) => {
         case "SET_POST_ID":
             const postId = action.payload.postIdSelected;
             return { ...state, postIdSelected: postId }
-            
+
         default:
             return state;
     }

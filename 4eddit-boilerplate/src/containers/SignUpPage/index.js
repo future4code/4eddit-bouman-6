@@ -12,8 +12,13 @@ const MainContainer = styled.div`
   text-align: center;
 `
 
+const StyledInputContainer = styled.div`
+  background: white;
+  padding: 100px 0;
+`
+
 const StyledImg = styled.img`
-  max-width: 20vw;
+  max-width: 15vw;
   height: auto;
 `
 
@@ -28,6 +33,26 @@ const StyledTextField = styled(TextField)`
   width: 300px;
 `
 
+const StyledDiv = styled.div`
+  padding: 5px 0;
+  background: #ffb08f;
+  color: transparent;
+`
+
+const StyleText = styled.h2`
+    font-size: 18pt;
+`
+
+const StyledButtonSignUp = styled(Button)`
+  margin-top: 10px;
+  font-weight: bold;
+`
+
+const StyledButtonGoBack = styled(Button)`
+  font-weight: bold;
+  margin-top: 20px;
+`
+
 const signUpForm = [
   {
     name: "username",
@@ -35,6 +60,7 @@ const signUpForm = [
     label: "Nome de Usuário",
     required: true,
     variant: "outlined",
+    color: "secondary"
   },
   {
     name: "email",
@@ -42,6 +68,7 @@ const signUpForm = [
     label: "Email",
     required: true,
     variant: "outlined",
+    color: "secondary"
   },
   {
     name: "password",
@@ -49,6 +76,7 @@ const signUpForm = [
     label: "Senha",
     required: true,
     variant: "outlined",
+    color: "secondary"
   }
 ]
 
@@ -74,22 +102,40 @@ class SignUpPage extends Component {
     return (
       <MainContainer>
         <StyledImg src={Logo} alt="imagem da logo" />
-        <FormContainer onSubmit={this.handleInputChanges}>
-          {signUpForm.map((input, index) => (
-            <StyledTextField
-              key={index}
-              name={input.name}
-              value={this.state.form[input.name] || ""}
-              id={input.name}
-              label={input.label}
-              onChange={this.handleInputChanges}
-              variant={input.variant}
-              type={input.type}
-            />
-          ))}
-          <Button onClick={this.handleCreateUser} variant="contained" color="primary">Cadastrar</Button>          
-        </FormContainer>
-        <Button onClick={this.props.goToLoginPage} color="primary" variant="contained">Voltar</Button>
+        <StyledDiv>div faixa</StyledDiv>    
+        <StyledInputContainer>
+          <StyleText>Cadastro para Novos Usuários</StyleText>
+          <FormContainer onSubmit={this.handleInputChanges}>
+            {signUpForm.map((input, index) => (
+              <StyledTextField
+                key={index}
+                name={input.name}
+                value={this.state.form[input.name] || ""}
+                id={input.name}
+                label={input.label}
+                onChange={this.handleInputChanges}
+                variant={input.variant}
+                type={input.type}
+                color={input.color}
+              />
+            ))}
+            <StyledButtonSignUp 
+              onClick={this.handleCreateUser} 
+              variant="contained" 
+              color="secondary">
+              Cadastrar
+            </StyledButtonSignUp>          
+          </FormContainer>
+
+          <StyledButtonGoBack 
+            onClick={this.props.goToLoginPage} 
+            color="secondary" 
+            variant="contained">
+            Voltar
+          </StyledButtonGoBack> 
+
+        </StyledInputContainer>
+        <StyledDiv>div faixa</StyledDiv>
       </MainContainer>
     );
   }
