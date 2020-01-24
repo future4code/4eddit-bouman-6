@@ -19,7 +19,7 @@ const StyledMainContainer = styled.div`
 `
 
 const StyledImg = styled.img`
-   max-width: 25%;
+   width: 15vw;
    height: auto;
 `
 
@@ -120,7 +120,7 @@ class PostDetails extends Component {
    render() {
       return (
          <StyledMainContainer key="">
-            <StyledImg src={Logo} alt="imagem da logo" />
+            <StyledImg src={Logo} alt="imagem da logo"/>
             <StyledTitle>Post Details</StyledTitle>
 
             <StyledCardsContainer>
@@ -137,9 +137,9 @@ class PostDetails extends Component {
                   </CardContent>
                   <CardActions>
                      <ContainerPostsCount>
-                        <ArrowUp onClick={() => { this.props.postVote(+1, this.props.post.id) }}>⬆</ArrowUp>
+                        <ArrowUp onClick={() => { this.props.postVote(+1, this.props.postDetails.id) }}>⬆</ArrowUp>
                         <span>{this.props.postDetails.userVoteDirection}</span>
-                        <ArrowDown onClick={() => { this.props.postVote(-1, this.props.post.id) }}>⬇</ArrowDown>
+                        <ArrowDown onClick={() => { this.props.postVote(-1, this.props.postDetails.id) }}>⬇</ArrowDown>
                      </ContainerPostsCount>
                      <div>
                          <span>comentários</span>

@@ -4,6 +4,8 @@ import { routes } from '../containers/Router'
 
 const baseURL = "https://us-central1-missao-newton.cloudfunctions.net/fourEddit"
 
+// Cria um novo usuário e enviar para a página de Feeds.
+
 export const createUser = (email, password, username) => async (dispatch) => {
    const newUser = {
       email,
